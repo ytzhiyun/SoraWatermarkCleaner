@@ -71,7 +71,7 @@ if __name__ == "__main__":
 We also provide you with a `streamlit` based interactive web page, try it with:
 
 ```bash
-python app.py
+streamlit run app.py
 ```
 
 
