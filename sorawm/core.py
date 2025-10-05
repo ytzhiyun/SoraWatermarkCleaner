@@ -5,6 +5,9 @@ from sorawm.utils.watermark_utls import (detect_watermark, get_bounding_box,
                                          h_tmpl, w_tmpl)
 from sorawm.watermark_cleaner import WaterMarkCleaner
 from sorawm.watermark_detector import SoraWaterMarkDetector
+import ffmpeg
+import numpy as np
+from tqdm import tqdm
 
 # based on the sora tempalte to detect the whole, and then got the icon part area.
 
@@ -18,10 +21,6 @@ class SoraWM:
         self.cleaner = WaterMarkCleaner()
 
     def run(self):
-        import cv2
-        import ffmpeg
-        import numpy as np
-        from tqdm import tqdm
 
         # 确保输出目录存在
         self.output_video_path.parent.mkdir(parents=True, exist_ok=True)
