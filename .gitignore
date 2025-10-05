@@ -214,7 +214,7 @@ datasets/labels
 datasets/coco8
 .DS_store
 outputs
-*.pt
+yolo11n.pt
 .claude
 
 runs
