@@ -206,3 +206,15 @@ marimo/_static/
 marimo/_lsp/
 __marimo__/
 output
+
+videos
+
+datasets/images
+datasets/labels
+datasets/coco8
+.DS_store
+outputs
+*.pt
+.claude
+
+runs
