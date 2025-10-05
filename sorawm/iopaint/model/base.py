@@ -99,7 +99,7 @@ class InpaintModel:
                     crop_image, crop_box = self._run_box(image, mask, box, config)
                     crop_result.append((crop_image, crop_box))
 
-                inpaint_result = image[:, :, ::-1]
+                inpaint_result = image[:, :, ::-1].copy()
                 for crop_image, crop_box in crop_result:
                     x1, y1, x2, y2 = crop_box
                     inpaint_result[y1:y2, x1:x2, :] = crop_image
@@ -285,7 +285,7 @@ class DiffusionInpaintModel(InpaintModel):
         if config.use_croper:
             crop_img, crop_mask, (l, t, r, b) = self._apply_cropper(image, mask, config)
             crop_image = self._scaled_pad_forward(crop_img, crop_mask, config)
-            inpaint_result = image[:, :, ::-1]
+            inpaint_result = image[:, :, ::-1].copy()
             inpaint_result[t:b, l:r, :] = crop_image
         elif config.use_extender:
             inpaint_result = self._do_outpainting(image, config)
