@@ -2,6 +2,16 @@
 
 This project provides a elegant way to remove the sora watermark in the sora2 generated videos.
 
+- Watermark removed
+
+<video src="resources/sora_watermark_removed.mp4" width="300" controls></video>
+
+- Original
+
+<video src="resources/19700121_1645_68e0a027836c8191a50bea3717ea7485.mp4" width="300" controls></video>
+
+
+
 
 
 
@@ -40,10 +50,6 @@ uv sync
 
 The trained yolo weights will be stored in the `resources` dir as the `best.pt`.  And it will be automatically downloaded from https://github.com/linkedlist771/SoraWatermarkCleaner/releases/download/V0.0.1/best.pt . The `Lama` model is downloaded from https://github.com/Sanster/models/releases/download/add_big_lama/big-lama.pt, and will be stored in the torch cache dir. Both downloads are automatic, if you fail, please check your internet status.
 
-
-
-
-
 ## 3.  Demo
 
 To have a basically usage, just try the `example.py`:
@@ -64,7 +70,11 @@ if __name__ == "__main__":
 
 ```
 
+We also provide you with a `streamlit` based interactive web page, try it with:
 
+```bash
+python app.py
+```
 
 
 
