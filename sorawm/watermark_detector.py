@@ -6,12 +6,13 @@ from ultralytics import YOLO
 
 from sorawm.configs import WATER_MARK_DETECT_YOLO_WEIGHTS
 from sorawm.utils.video_utils import VideoLoader
-
+from sorawm.utils.download_utils import download_detector_weights
 # based on the sora tempalte to detect the whole, and then got the icon part area.
 
 
 class SoraWaterMarkDetector:
     def __init__(self):
+        download_detector_weights()
         logger.debug(f"Begin to load yolo water mark detet model.")
         self.model = YOLO(WATER_MARK_DETECT_YOLO_WEIGHTS)
         logger.debug(f"Yolo water mark detet model loaded.")

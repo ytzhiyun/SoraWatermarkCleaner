@@ -15,3 +15,4 @@ OUTPUT_DIR.mkdir(exist_ok=True, parents=True)
 
 
 DEFAULT_WATERMARK_REMOVE_MODEL = "lama"
+
