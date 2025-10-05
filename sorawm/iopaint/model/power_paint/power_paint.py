@@ -1,9 +1,10 @@
 import cv2
 import PIL.Image
 import torch
-from sorawm.iopaint.schema import InpaintRequest
 from loguru import logger
 from PIL import Image
+
+from sorawm.iopaint.schema import InpaintRequest
 
 from ...const import POWERPAINT_NAME
 from ..base import DiffusionInpaintModel

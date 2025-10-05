@@ -7,8 +7,10 @@ from typing import Any, Optional
 import torch
 import torch.nn.functional as F
 from einops import rearrange, repeat
-from sorawm.iopaint.model.anytext.ldm.modules.diffusionmodules.util import checkpoint
 from torch import einsum, nn
+
+from sorawm.iopaint.model.anytext.ldm.modules.diffusionmodules.util import \
+    checkpoint
 
 _ATTN_PRECISION = os.environ.get("ATTN_PRECISION", "fp32")
 

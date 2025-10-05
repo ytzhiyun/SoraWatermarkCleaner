@@ -4,16 +4,17 @@ from typing import Dict, Optional
 
 import cv2
 import numpy as np
-from sorawm.iopaint.helper import pil_to_bytes
-from sorawm.iopaint.model.utils import torch_gc
-from sorawm.iopaint.model_manager import ModelManager
-from sorawm.iopaint.schema import InpaintRequest
 from loguru import logger
 from PIL import Image
 from rich.console import Console
 from rich.progress import (BarColumn, MofNCompleteColumn, Progress,
                            SpinnerColumn, TaskProgressColumn, TextColumn,
                            TimeElapsedColumn)
+
+from sorawm.iopaint.helper import pil_to_bytes
+from sorawm.iopaint.model.utils import torch_gc
+from sorawm.iopaint.model_manager import ModelManager
+from sorawm.iopaint.schema import InpaintRequest
 
 
 def glob_images(path: Path) -> Dict[str, Path]:

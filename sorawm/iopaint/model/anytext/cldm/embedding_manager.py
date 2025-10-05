@@ -6,8 +6,9 @@ from functools import partial
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from sorawm.iopaint.model.anytext.ldm.modules.diffusionmodules.util import (conv_nd,
-                                                                     linear)
+
+from sorawm.iopaint.model.anytext.ldm.modules.diffusionmodules.util import (
+    conv_nd, linear)
 
 
 def get_clip_token_for_string(tokenizer, string):

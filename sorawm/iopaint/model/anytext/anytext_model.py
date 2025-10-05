@@ -1,5 +1,6 @@
 import torch
 from huggingface_hub import hf_hub_download
+
 from sorawm.iopaint.const import ANYTEXT_NAME
 from sorawm.iopaint.model.anytext.anytext_pipeline import AnyTextPipeline
 from sorawm.iopaint.model.base import DiffusionInpaintModel

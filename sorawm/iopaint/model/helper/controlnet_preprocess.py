@@ -2,8 +2,9 @@ import cv2
 import numpy as np
 import PIL
 import torch
-from sorawm.iopaint.helper import pad_img_to_modulo
 from PIL import Image
+
+from sorawm.iopaint.helper import pad_img_to_modulo
 
 
 def make_canny_control_image(image: np.ndarray) -> Image:

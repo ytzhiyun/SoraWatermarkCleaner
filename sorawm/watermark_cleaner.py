@@ -3,13 +3,13 @@ from pathlib import Path
 import cv2
 import numpy as np
 import torch
+from loguru import logger
+
+from sorawm.configs import DEFAULT_WATERMARK_REMOVE_MODEL
 from sorawm.iopaint.const import DEFAULT_MODEL_DIR
 from sorawm.iopaint.download import cli_download_model, scan_models
 from sorawm.iopaint.model_manager import ModelManager
 from sorawm.iopaint.schema import InpaintRequest
-from loguru import logger
-
-from sorawm.configs import DEFAULT_WATERMARK_REMOVE_MODEL
 
 # This codebase is from https://github.com/Sanster/IOPaint#, thanks for their amazing work!
 

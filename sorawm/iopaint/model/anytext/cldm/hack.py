@@ -1,9 +1,10 @@
 import einops
+import torch
+from transformers import logging
+
 import sorawm.iopaint.model.anytext.ldm.modules.attention
 import sorawm.iopaint.model.anytext.ldm.modules.encoders.modules
-import torch
 from sorawm.iopaint.model.anytext.ldm.modules.attention import default
-from transformers import logging
 
 
 def disable_verbosity():

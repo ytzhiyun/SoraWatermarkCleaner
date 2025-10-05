@@ -5,6 +5,7 @@ from sorawm.iopaint.schema import InpaintRequest
 os.environ["PYTORCH_ENABLE_MPS_FALLBACK"] = "1"
 
 import torch
+
 from sorawm.iopaint.model_manager import ModelManager
 
 

@@ -2,6 +2,8 @@ from typing import Dict, List
 
 import numpy as np
 import torch
+from loguru import logger
+
 from sorawm.iopaint.download import scan_models
 from sorawm.iopaint.helper import switch_mps_device
 from sorawm.iopaint.model import SD, SDXL, ControlNet, models
@@ -10,7 +12,6 @@ from sorawm.iopaint.model.brushnet.brushnet_xl_wrapper import BrushNetXLWrapper
 from sorawm.iopaint.model.power_paint.power_paint_v2 import PowerPaintV2
 from sorawm.iopaint.model.utils import is_local_files_only, torch_gc
 from sorawm.iopaint.schema import InpaintRequest, ModelInfo, ModelType
-from loguru import logger
 
 
 class ModelManager:

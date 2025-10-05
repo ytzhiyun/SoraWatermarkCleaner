@@ -1,8 +1,9 @@
 import cv2
 import PIL.Image
 import torch
-from sorawm.iopaint.schema import InpaintRequest, ModelType
 from loguru import logger
+
+from sorawm.iopaint.schema import InpaintRequest, ModelType
 
 from .base import DiffusionInpaintModel
 from .helper.cpu_text_encoder import CPUTextEncoderWrapper

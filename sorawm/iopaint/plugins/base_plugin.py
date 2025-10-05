@@ -1,6 +1,7 @@
 import numpy as np
-from sorawm.iopaint.schema import RunPluginRequest
 from loguru import logger
+
+from sorawm.iopaint.schema import RunPluginRequest
 
 
 class BasePlugin:

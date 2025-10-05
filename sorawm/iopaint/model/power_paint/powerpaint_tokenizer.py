@@ -2,8 +2,9 @@ import copy
 import random
 from typing import Any, List, Union
 
-from sorawm.iopaint.schema import PowerPaintTask
 from transformers import CLIPTokenizer
+
+from sorawm.iopaint.schema import PowerPaintTask
 
 
 def add_task_to_prompt(prompt, negative_prompt, task: PowerPaintTask):

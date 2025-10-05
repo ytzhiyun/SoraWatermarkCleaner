@@ -1,14 +1,15 @@
 from pathlib import Path
 
+import ffmpeg
+import numpy as np
+from loguru import logger
+from tqdm import tqdm
+
 from sorawm.utils.video_utils import VideoLoader
 from sorawm.utils.watermark_utls import (detect_watermark, get_bounding_box,
                                          h_tmpl, w_tmpl)
 from sorawm.watermark_cleaner import WaterMarkCleaner
 from sorawm.watermark_detector import SoraWaterMarkDetector
-import ffmpeg
-from loguru import logger
-import numpy as np
-from tqdm import tqdm
 
 # based on the sora tempalte to detect the whole, and then got the icon part area.
 
@@ -67,8 +68,13 @@ class SoraWM:
         audio_stream = ffmpeg.input(str(input_video_path)).audio
 
         (
-            ffmpeg.output(video_stream, audio_stream, str(output_video_path),
-                         vcodec="copy", acodec="aac")
+            ffmpeg.output(
+                video_stream,
+                audio_stream,
+                str(output_video_path),
+                vcodec="copy",
+                acodec="aac",
+            )
             .overwrite_output()
             .run(quiet=True)
         )
@@ -81,6 +87,7 @@ class SoraWM:
 
 if __name__ == "__main__":
     from pathlib import Path
+
     input_video_path = Path(
         "resources/19700121_1645_68e0a027836c8191a50bea3717ea7485.mp4"
     )

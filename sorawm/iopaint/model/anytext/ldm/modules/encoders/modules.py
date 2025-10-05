@@ -1,10 +1,11 @@
 import torch
 import torch.nn as nn
-from sorawm.iopaint.model.anytext.ldm.util import count_params
 from torch.utils.checkpoint import checkpoint
 from transformers import (AutoProcessor, CLIPTextModel, CLIPTokenizer,
                           CLIPVisionModelWithProjection, T5EncoderModel,
                           T5Tokenizer)
+
+from sorawm.iopaint.model.anytext.ldm.util import count_params
 
 
 def _expand_mask(mask, dtype, tgt_len=None):

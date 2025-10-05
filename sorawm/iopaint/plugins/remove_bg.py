@@ -3,10 +3,11 @@ import os
 import cv2
 import numpy as np
 import torch
-from sorawm.iopaint.plugins.base_plugin import BasePlugin
-from sorawm.iopaint.schema import Device, RemoveBGModel, RunPluginRequest
 from loguru import logger
 from torch.hub import get_dir
+
+from sorawm.iopaint.plugins.base_plugin import BasePlugin
+from sorawm.iopaint.schema import Device, RemoveBGModel, RunPluginRequest
 
 
 def _rmbg_remove(device, *args, **kwargs):
@@ -43,14 +44,14 @@ class RemoveBG(BasePlugin):
         self.device_warning()
 
         if model_name == RemoveBGModel.briaai_rmbg_1_4:
-            from sorawm.iopaint.plugins.briarmbg import (briarmbg_process,
-                                                  create_briarmbg_session)
+            from sorawm.iopaint.plugins.briarmbg import (
+                briarmbg_process, create_briarmbg_session)
 
             self.session = create_briarmbg_session().to(self.device)
             self.remove = briarmbg_process
         elif model_name == RemoveBGModel.briaai_rmbg_2_0:
-            from sorawm.iopaint.plugins.briarmbg2 import (briarmbg2_process,
-                                                   create_briarmbg2_session)
+            from sorawm.iopaint.plugins.briarmbg2 import (
+                briarmbg2_process, create_briarmbg2_session)
 
             self.session = create_briarmbg2_session().to(self.device)
             self.remove = briarmbg2_process

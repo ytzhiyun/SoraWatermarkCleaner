@@ -4,10 +4,11 @@ import cv2
 import numpy as np
 import PIL.Image
 import torch
-from sorawm.iopaint.model.original_sd_configs import get_config_files
-from sorawm.iopaint.schema import InpaintRequest, ModelType
 from loguru import logger
 from transformers import CLIPTextModel, CLIPTokenizer
+
+from sorawm.iopaint.model.original_sd_configs import get_config_files
+from sorawm.iopaint.schema import InpaintRequest, ModelType
 
 from ..base import DiffusionInpaintModel
 from ..helper.cpu_text_encoder import CPUTextEncoderWrapper

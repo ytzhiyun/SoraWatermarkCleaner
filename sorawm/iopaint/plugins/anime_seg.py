@@ -3,10 +3,11 @@ import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+from PIL import Image
+
 from sorawm.iopaint.helper import load_model
 from sorawm.iopaint.plugins.base_plugin import BasePlugin
 from sorawm.iopaint.schema import RunPluginRequest
-from PIL import Image
 
 
 class REBNCONV(nn.Module):

@@ -1,13 +1,15 @@
 import os
 
-from sorawm.iopaint.tests.utils import assert_equal, check_device, get_config
 from loguru import logger
+
+from sorawm.iopaint.tests.utils import assert_equal, check_device, get_config
 
 os.environ["PYTORCH_ENABLE_MPS_FALLBACK"] = "1"
 from pathlib import Path
 
 import pytest
 import torch
+
 from sorawm.iopaint.model_manager import ModelManager
 from sorawm.iopaint.schema import HDStrategy, SDSampler
 

@@ -6,6 +6,7 @@ os.environ["PYTORCH_ENABLE_MPS_FALLBACK"] = "1"
 
 import pytest
 import torch
+
 from sorawm.iopaint.model_manager import ModelManager
 from sorawm.iopaint.schema import HDStrategy, SDSampler
 from sorawm.iopaint.tests.test_model import assert_equal, get_config

@@ -3,15 +3,17 @@ from typing import List
 
 import numpy as np
 import torch
+from loguru import logger
+
 from sorawm.iopaint.helper import download_model
 from sorawm.iopaint.plugins.base_plugin import BasePlugin
-from sorawm.iopaint.plugins.segment_anything import SamPredictor, sam_model_registry
+from sorawm.iopaint.plugins.segment_anything import (SamPredictor,
+                                                     sam_model_registry)
 from sorawm.iopaint.plugins.segment_anything2.build_sam import build_sam2
 from sorawm.iopaint.plugins.segment_anything2.sam2_image_predictor import \
     SAM2ImagePredictor
 from sorawm.iopaint.plugins.segment_anything.predictor_hq import SamHQPredictor
 from sorawm.iopaint.schema import RunPluginRequest
-from loguru import logger
 
 # 从小到大
 SEGMENT_ANYTHING_MODELS = {

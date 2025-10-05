@@ -11,21 +11,24 @@ import numpy as np
 import torch
 import torch.nn as nn
 from einops import rearrange, repeat
-from sorawm.iopaint.model.anytext.ldm.models.autoencoder import (AutoencoderKL,
-                                                          IdentityFirstStage)
+from omegaconf import ListConfig
+from torch.optim.lr_scheduler import LambdaLR
+from torchvision.utils import make_grid
+from tqdm import tqdm
+
+from sorawm.iopaint.model.anytext.ldm.models.autoencoder import (
+    AutoencoderKL, IdentityFirstStage)
 from sorawm.iopaint.model.anytext.ldm.models.diffusion.ddim import DDIMSampler
 from sorawm.iopaint.model.anytext.ldm.modules.diffusionmodules.util import (
     extract_into_tensor, make_beta_schedule, noise_like)
 from sorawm.iopaint.model.anytext.ldm.modules.distributions.distributions import (
     DiagonalGaussianDistribution, normal_kl)
 from sorawm.iopaint.model.anytext.ldm.modules.ema import LitEma
-from sorawm.iopaint.model.anytext.ldm.util import (count_params, default, exists,
-                                            instantiate_from_config, isimage,
-                                            ismap, log_txt_as_img, mean_flat)
-from omegaconf import ListConfig
-from torch.optim.lr_scheduler import LambdaLR
-from torchvision.utils import make_grid
-from tqdm import tqdm
+from sorawm.iopaint.model.anytext.ldm.util import (count_params, default,
+                                                   exists,
+                                                   instantiate_from_config,
+                                                   isimage, ismap,
+                                                   log_txt_as_img, mean_flat)
 
 __conditioning_keys__ = {"concat": "c_concat", "crossattn": "c_crossattn", "adm": "y"}
 

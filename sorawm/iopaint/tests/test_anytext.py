@@ -7,6 +7,7 @@ from pathlib import Path
 
 import pytest
 import torch
+
 from sorawm.iopaint.model_manager import ModelManager
 from sorawm.iopaint.schema import HDStrategy
 

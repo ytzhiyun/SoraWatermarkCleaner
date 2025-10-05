@@ -5,14 +5,15 @@ from functools import lru_cache
 from pathlib import Path
 from typing import List, Optional
 
+from loguru import logger
+
 from sorawm.iopaint.const import (ANYTEXT_NAME, DEFAULT_MODEL_DIR,
-                           DIFFUSERS_SD_CLASS_NAME,
-                           DIFFUSERS_SD_INPAINT_CLASS_NAME,
-                           DIFFUSERS_SDXL_CLASS_NAME,
-                           DIFFUSERS_SDXL_INPAINT_CLASS_NAME)
+                                  DIFFUSERS_SD_CLASS_NAME,
+                                  DIFFUSERS_SD_INPAINT_CLASS_NAME,
+                                  DIFFUSERS_SDXL_CLASS_NAME,
+                                  DIFFUSERS_SDXL_INPAINT_CLASS_NAME)
 from sorawm.iopaint.model.original_sd_configs import get_config_files
 from sorawm.iopaint.schema import ModelInfo, ModelType
-from loguru import logger
 
 
 def cli_download_model(model: str):

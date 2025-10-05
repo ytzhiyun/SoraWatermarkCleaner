@@ -8,6 +8,7 @@ import numpy as np
 import nvidia_smi
 import psutil
 import torch
+
 from sorawm.iopaint.model_manager import ModelManager
 from sorawm.iopaint.schema import HDStrategy, InpaintRequest, SDSampler
 

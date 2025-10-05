@@ -1,9 +1,10 @@
 import pytest
 import torch
+
 from sorawm.iopaint.model_manager import ModelManager
 from sorawm.iopaint.schema import HDStrategy, LDMSampler
-from sorawm.iopaint.tests.utils import (assert_equal, check_device, current_dir,
-                                 get_config)
+from sorawm.iopaint.tests.utils import (assert_equal, check_device,
+                                        current_dir, get_config)
 
 
 @pytest.mark.parametrize("device", ["cuda", "mps", "cpu"])

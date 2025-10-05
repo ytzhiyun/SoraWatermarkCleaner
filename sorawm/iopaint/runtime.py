@@ -6,9 +6,10 @@ from pathlib import Path
 from typing import Any, Dict
 
 import packaging.version
-from sorawm.iopaint.schema import Device
 from loguru import logger
 from rich import print
+
+from sorawm.iopaint.schema import Device
 
 _PY_VERSION: str = sys.version.split()[0].rstrip("+")
 

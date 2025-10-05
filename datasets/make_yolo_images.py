@@ -11,7 +11,7 @@ images_dir = datasets_dir / "images"
 images_dir.mkdir(exist_ok=True, parents=True)
 
 if __name__ == "__main__":
-    fps_save_interval = 20  # Save every 20th frame
+    fps_save_interval = 1  # Save every 1th frame
 
     idx = 0
     for video_path in tqdm(list(videos_dir.rglob("*.mp4"))):

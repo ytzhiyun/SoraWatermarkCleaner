@@ -11,6 +11,7 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 from easydict import EasyDict as edict
+
 from sorawm.iopaint.model.anytext.ocr_recog.RecModel import RecModel
 
 

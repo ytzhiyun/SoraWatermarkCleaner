@@ -10,10 +10,11 @@ from urllib.parse import urlparse
 import cv2
 import numpy as np
 import torch
-from sorawm.iopaint.const import MPS_UNSUPPORT_MODELS
 from loguru import logger
 from PIL import Image, ImageOps, PngImagePlugin
 from torch.hub import download_url_to_file, get_dir
+
+from sorawm.iopaint.const import MPS_UNSUPPORT_MODELS
 
 
 def md5sum(filename):
