@@ -216,5 +216,6 @@ datasets/coco8
 outputs
 yolo11n.pt
 .claude
+best.pt
 
 runs

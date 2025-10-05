@@ -1,5 +1,6 @@
-import ffmpeg
 from pathlib import Path
+
+import ffmpeg
 import numpy as np
 
 
