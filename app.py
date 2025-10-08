@@ -1,22 +1,22 @@
-import streamlit as st
-from pathlib import Path
-import tempfile
 import shutil
+import tempfile
+from pathlib import Path
+
+import streamlit as st
+
 from sorawm.core import SoraWM
 
 
 def main():
     st.set_page_config(
-        page_title="Sora Watermark Cleaner",
-        page_icon="🎬",
-        layout="centered"
+        page_title="Sora Watermark Cleaner", page_icon="🎬", layout="centered"
     )
 
     st.title("🎬 Sora Watermark Cleaner")
     st.markdown("Remove watermarks from Sora-generated videos with ease")
 
     # Initialize SoraWM
-    if 'sora_wm' not in st.session_state:
+    if "sora_wm" not in st.session_state:
         with st.spinner("Loading AI models..."):
             st.session_state.sora_wm = SoraWM()
 
@@ -25,8 +25,8 @@ def main():
     # File uploader
     uploaded_file = st.file_uploader(
         "Upload your video",
-        type=['mp4', 'avi', 'mov', 'mkv'],
-        help="Select a video file to remove watermarks"
+        type=["mp4", "avi", "mov", "mkv"],
+        help="Select a video file to remove watermarks",
     )
 
     if uploaded_file is not None:
@@ -41,14 +41,16 @@ def main():
 
                 # Save uploaded file
                 input_path = tmp_path / uploaded_file.name
-                with open(input_path, 'wb') as f:
+                with open(input_path, "wb") as f:
                     f.write(uploaded_file.read())
 
                 # Process video
                 output_path = tmp_path / f"cleaned_{uploaded_file.name}"
 
                 try:
-                    with st.spinner("🔄 Processing video... This may take a few minutes."):
+                    with st.spinner(
+                        "🔄 Processing video... This may take a few minutes."
+                    ):
                         st.session_state.sora_wm.run(input_path, output_path)
 
                     st.success("✅ Watermark removed successfully!")
@@ -58,13 +60,13 @@ def main():
                     st.video(str(output_path))
 
                     # Download button
-                    with open(output_path, 'rb') as f:
+                    with open(output_path, "rb") as f:
                         st.download_button(
                             label="⬇️ Download Cleaned Video",
                             data=f,
                             file_name=f"cleaned_{uploaded_file.name}",
                             mime="video/mp4",
-                            use_container_width=True
+                            use_container_width=True,
                         )
 
                 except Exception as e:
@@ -79,7 +81,7 @@ def main():
             <p><a href='https://github.com/linkedlist771/SoraWatermarkCleaner'>GitHub Repository</a></p>
         </div>
         """,
-        unsafe_allow_html=True
+        unsafe_allow_html=True,
     )
 
 
