@@ -70,14 +70,8 @@ def test_runway_powerpaint_v2(device, sampler):
             "prompt": "face of a fox, sitting on a bench",
             "scale": 7.5,
         },
-        PowerPaintTask.object_remove: {
-            "prompt": "",
-            "scale": 12,
-        },
-        PowerPaintTask.outpainting: {
-            "prompt": "",
-            "scale": 7.5,
-        },
+        PowerPaintTask.object_remove: {"prompt": "", "scale": 12,},
+        PowerPaintTask.outpainting: {"prompt": "", "scale": 7.5,},
     }
 
     for task, data in tasks.items():

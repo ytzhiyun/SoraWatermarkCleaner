@@ -12,8 +12,7 @@ import torch
 from .modeling.backbones.hieradet import Hiera
 from .modeling.backbones.image_encoder import FpnNeck, ImageEncoder
 from .modeling.memory_attention import MemoryAttention, MemoryAttentionLayer
-from .modeling.memory_encoder import (CXBlock, Fuser, MaskDownSampler,
-                                      MemoryEncoder)
+from .modeling.memory_encoder import CXBlock, Fuser, MaskDownSampler, MemoryEncoder
 from .modeling.position_encoding import PositionEmbeddingSine
 from .modeling.sam2_base import SAM2Base
 from .modeling.sam.transformer import RoPEAttention
@@ -110,11 +109,7 @@ def build_memory_encoder():
         position_encoding=PositionEmbeddingSine(
             num_pos_feats=64, normalize=True, scale=None, temperature=10000
         ),
-        mask_downsampler=MaskDownSampler(
-            kernel_size=3,
-            stride=2,
-            padding=1,
-        ),
+        mask_downsampler=MaskDownSampler(kernel_size=3, stride=2, padding=1,),
         fuser=Fuser(
             layer=CXBlock(
                 dim=256,
@@ -141,10 +136,7 @@ def build_image_encoder_tiny():
         ),
         neck=FpnNeck(
             position_encoding=PositionEmbeddingSine(
-                num_pos_feats=256,
-                normalize=True,
-                scale=None,
-                temperature=10000,
+                num_pos_feats=256, normalize=True, scale=None, temperature=10000,
             ),
             d_model=256,
             backbone_channel_list=[768, 384, 192, 96],
@@ -167,10 +159,7 @@ def build_image_encoder_small():
         ),
         neck=FpnNeck(
             position_encoding=PositionEmbeddingSine(
-                num_pos_feats=256,
-                normalize=True,
-                scale=None,
-                temperature=10000,
+                num_pos_feats=256, normalize=True, scale=None, temperature=10000,
             ),
             d_model=256,
             backbone_channel_list=[768, 384, 192, 96],
@@ -193,10 +182,7 @@ def build_image_encoder_base():
         ),
         neck=FpnNeck(
             position_encoding=PositionEmbeddingSine(
-                num_pos_feats=256,
-                normalize=True,
-                scale=None,
-                temperature=10000,
+                num_pos_feats=256, normalize=True, scale=None, temperature=10000,
             ),
             d_model=256,
             backbone_channel_list=[896, 448, 224, 112],
@@ -219,10 +205,7 @@ def build_image_encoder_large():
         ),
         neck=FpnNeck(
             position_encoding=PositionEmbeddingSine(
-                num_pos_feats=256,
-                normalize=True,
-                scale=None,
-                temperature=10000,
+                num_pos_feats=256, normalize=True, scale=None, temperature=10000,
             ),
             d_model=256,
             backbone_channel_list=[1152, 576, 288, 144],
@@ -317,10 +300,7 @@ sam2_model_registry = {
 
 
 def build_sam2(
-    name,
-    ckpt_path=None,
-    device="cuda",
-    mode="eval",
+    name, ckpt_path=None, device="cuda", mode="eval",
 ):
     model = sam2_model_registry[name]()
     _load_checkpoint(model, ckpt_path)

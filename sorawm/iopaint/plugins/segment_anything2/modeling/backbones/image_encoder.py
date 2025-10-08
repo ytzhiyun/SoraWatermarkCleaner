@@ -13,10 +13,7 @@ import torch.nn.functional as F
 
 class ImageEncoder(nn.Module):
     def __init__(
-        self,
-        trunk: nn.Module,
-        neck: nn.Module,
-        scalp: int = 0,
+        self, trunk: nn.Module, neck: nn.Module, scalp: int = 0,
     ):
         super().__init__()
         self.trunk = trunk

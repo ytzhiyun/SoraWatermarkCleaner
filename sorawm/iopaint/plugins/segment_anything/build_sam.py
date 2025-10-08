@@ -8,11 +8,15 @@ from functools import partial
 
 import torch
 
-from sorawm.iopaint.plugins.segment_anything.modeling.tiny_vit_sam import \
-    TinyViT
+from sorawm.iopaint.plugins.segment_anything.modeling.tiny_vit_sam import TinyViT
 
-from .modeling import (ImageEncoderViT, MaskDecoder, PromptEncoder, Sam,
-                       TwoWayTransformer)
+from .modeling import (
+    ImageEncoderViT,
+    MaskDecoder,
+    PromptEncoder,
+    Sam,
+    TwoWayTransformer,
+)
 from .modeling.image_encoder_hq import ImageEncoderViTHQ
 from .modeling.mask_decoder import MaskDecoderHQ
 from .modeling.sam_hq import SamHQ
@@ -79,10 +83,7 @@ def build_sam_vit_t(checkpoint=None):
         mask_decoder=MaskDecoder(
             num_multimask_outputs=3,
             transformer=TwoWayTransformer(
-                depth=2,
-                embedding_dim=prompt_embed_dim,
-                mlp_dim=2048,
-                num_heads=8,
+                depth=2, embedding_dim=prompt_embed_dim, mlp_dim=2048, num_heads=8,
             ),
             transformer_dim=prompt_embed_dim,
             iou_head_depth=3,
@@ -177,10 +178,7 @@ def _build_sam(
         mask_decoder=MaskDecoder(
             num_multimask_outputs=3,
             transformer=TwoWayTransformer(
-                depth=2,
-                embedding_dim=prompt_embed_dim,
-                mlp_dim=2048,
-                num_heads=8,
+                depth=2, embedding_dim=prompt_embed_dim, mlp_dim=2048, num_heads=8,
             ),
             transformer_dim=prompt_embed_dim,
             iou_head_depth=3,
@@ -232,10 +230,7 @@ def _build_sam_hq(
         mask_decoder=MaskDecoderHQ(
             num_multimask_outputs=3,
             transformer=TwoWayTransformer(
-                depth=2,
-                embedding_dim=prompt_embed_dim,
-                mlp_dim=2048,
-                num_heads=8,
+                depth=2, embedding_dim=prompt_embed_dim, mlp_dim=2048, num_heads=8,
             ),
             transformer_dim=prompt_embed_dim,
             iou_head_depth=3,

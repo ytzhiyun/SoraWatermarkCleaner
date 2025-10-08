@@ -6,8 +6,6 @@ from loguru import logger
 from tqdm import tqdm
 
 from sorawm.utils.video_utils import VideoLoader
-from sorawm.utils.watermark_utls import (detect_watermark, get_bounding_box,
-                                         h_tmpl, w_tmpl)
 from sorawm.watermark_cleaner import WaterMarkCleaner
 from sorawm.watermark_detector import SoraWaterMarkDetector
 
@@ -24,7 +22,6 @@ class SoraWM:
         height = input_video_loader.height
         fps = input_video_loader.fps
         total_frames = input_video_loader.total_frames
-
         # Create temporary output path for video without audio
         temp_output_path = output_video_path.parent / f"temp_{output_video_path.name}"
 
@@ -38,30 +35,60 @@ class SoraWM:
             )
             .output(str(temp_output_path), pix_fmt="yuv420p", vcodec="libx264")
             .overwrite_output()
-            .global_args('-loglevel', 'error')
+            .global_args("-loglevel", "error")
             .run_async(pipe_stdin=True)
         )
 
-        try:
-            for frame in tqdm(
-                input_video_loader, total=total_frames, desc="processing all frames"
-            ):
-                detection_result = self.detector.detect(frame)
+        frame_and_mask = {}
+        detect_missed = []
 
-                if detection_result["detected"]:
-                    x1, y1, x2, y2 = detection_result["bbox"]
-                    mask = np.zeros((height, width), dtype=np.uint8)
-                    mask[y1:y2, x1:x2] = 255
-                    cleaned_frame = self.cleaner.clean(frame, mask)
-                else:
-                    cleaned_frame = frame
-                process_out.stdin.write(cleaned_frame.tobytes())
+        logger.debug(
+            f"total frames: {total_frames}, fps: {fps}, width: {width}, height: {height}"
+        )
+        # try:
+        for idx, frame in enumerate(
+            tqdm(input_video_loader, total=total_frames, desc="Detect watermarks")
+        ):
+            detection_result = self.detector.detect(frame)
+            if detection_result["detected"]:
+                frame_and_mask[idx] = {"frame": frame, "bbox": detection_result["bbox"]}
+            else:
+                frame_and_mask[idx] = {"frame": frame, "bbox": None}
+                detect_missed.append(idx)
 
-        finally:
-            process_out.stdin.close()
-            process_out.wait()
+        logger.debug(f"detect missed frames: {detect_missed}")
 
-        # Merge audio from original video
+        for missed_idx in detect_missed:
+            before = max(missed_idx - 1, 0)
+            after = min(missed_idx + 1, total_frames - 1)
+            before_box = frame_and_mask[before]["bbox"]
+            after_box = frame_and_mask[after]["bbox"]
+            if before_box:
+                frame_and_mask[missed_idx]["bbox"] = before_box
+            elif after_box:
+                frame_and_mask[missed_idx]["bbox"] = after_box
+
+        for idx in tqdm(range(total_frames), desc="Remove watermarks"):
+            frame_info = frame_and_mask[idx]
+            frame = frame_info["frame"]
+            bbox = frame_info["bbox"]
+            if bbox is not None:
+                x1, y1, x2, y2 = bbox
+                mask = np.zeros((height, width), dtype=np.uint8)
+                mask[y1:y2, x1:x2] = 255
+                cleaned_frame = self.cleaner.clean(frame, mask)
+            else:
+                cleaned_frame = frame
+            process_out.stdin.write(cleaned_frame.tobytes())
+
+        process_out.stdin.close()
+        process_out.wait()
+
+        self.merge_audio_track(input_video_path, temp_output_path, output_video_path)
+
+    def merge_audio_track(
+        self, input_video_path: Path, temp_output_path: Path, output_video_path: Path
+    ):
         logger.info("Merging audio track...")
         video_stream = ffmpeg.input(str(temp_output_path))
         audio_stream = ffmpeg.input(str(input_video_path)).audio
@@ -77,10 +104,8 @@ class SoraWM:
             .overwrite_output()
             .run(quiet=True)
         )
-
         # Clean up temporary file
         temp_output_path.unlink()
-
         logger.info(f"Saved no watermark video with audio at: {output_video_path}")
 
 

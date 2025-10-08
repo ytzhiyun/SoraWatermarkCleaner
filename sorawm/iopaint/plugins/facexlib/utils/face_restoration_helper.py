@@ -426,7 +426,7 @@ class FaceRestoreHelper(object):
                 pasted_face = inv_mask_erosion[:, :, None] * inv_restored
                 total_face_area = np.sum(inv_mask_erosion)  # // 3
                 # compute the fusion edge based on the area of face
-                w_edge = int(total_face_area**0.5) // 20
+                w_edge = int(total_face_area ** 0.5) // 20
                 erosion_radius = w_edge * 2
                 inv_mask_center = cv2.erode(
                     inv_mask_erosion,

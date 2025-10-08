@@ -3,8 +3,12 @@ import torch
 
 from sorawm.iopaint.model_manager import ModelManager
 from sorawm.iopaint.schema import HDStrategy, LDMSampler
-from sorawm.iopaint.tests.utils import (assert_equal, check_device,
-                                        current_dir, get_config)
+from sorawm.iopaint.tests.utils import (
+    assert_equal,
+    check_device,
+    current_dir,
+    get_config,
+)
 
 
 @pytest.mark.parametrize("device", ["cuda", "mps", "cpu"])
@@ -84,9 +88,7 @@ def test_mat(device, strategy, no_half):
     cfg = get_config(strategy=strategy)
 
     assert_equal(
-        model,
-        cfg,
-        f"mat_{strategy.capitalize()}_result.png",
+        model, cfg, f"mat_{strategy.capitalize()}_result.png",
     )
 
 
@@ -107,10 +109,7 @@ def test_fcf(device, strategy):
 @pytest.mark.parametrize("cv2_flag", ["INPAINT_NS", "INPAINT_TELEA"])
 @pytest.mark.parametrize("cv2_radius", [3, 15])
 def test_cv2(strategy, cv2_flag, cv2_radius):
-    model = ModelManager(
-        name="cv2",
-        device=torch.device("cpu"),
-    )
+    model = ModelManager(name="cv2", device=torch.device("cpu"),)
     cfg = get_config(strategy=strategy, cv2_flag=cv2_flag, cv2_radius=cv2_radius)
     assert_equal(
         model,
@@ -127,10 +126,7 @@ def test_cv2(strategy, cv2_flag, cv2_radius):
 )
 def test_manga(device, strategy):
     check_device(device)
-    model = ModelManager(
-        name="manga",
-        device=torch.device(device),
-    )
+    model = ModelManager(name="manga", device=torch.device(device),)
     cfg = get_config(strategy=strategy)
     assert_equal(
         model,
@@ -145,10 +141,7 @@ def test_manga(device, strategy):
 @pytest.mark.parametrize("strategy", [HDStrategy.ORIGINAL])
 def test_mi_gan(device, strategy):
     check_device(device)
-    model = ModelManager(
-        name="migan",
-        device=torch.device(device),
-    )
+    model = ModelManager(name="migan", device=torch.device(device),)
     cfg = get_config(strategy=strategy)
     assert_equal(
         model,

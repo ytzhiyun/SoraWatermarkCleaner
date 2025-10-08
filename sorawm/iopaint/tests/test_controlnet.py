@@ -1,8 +1,12 @@
 import os
 
 from sorawm.iopaint.const import SD_CONTROLNET_CHOICES
-from sorawm.iopaint.tests.utils import (assert_equal, check_device,
-                                        current_dir, get_config)
+from sorawm.iopaint.tests.utils import (
+    assert_equal,
+    check_device,
+    current_dir,
+    get_config,
+)
 
 os.environ["PYTORCH_ENABLE_MPS_FALLBACK"] = "1"
 from pathlib import Path
@@ -89,8 +93,7 @@ def test_local_file_path(device, local_file):
     sd_steps = check_device(device)
 
     controlnet_kwargs = dict(
-        enable_controlnet=True,
-        controlnet_method=SD_CONTROLNET_CHOICES[0],
+        enable_controlnet=True, controlnet_method=SD_CONTROLNET_CHOICES[0],
     )
 
     model = ModelManager(
@@ -102,9 +105,7 @@ def test_local_file_path(device, local_file):
         **controlnet_kwargs,
     )
     cfg = get_config(
-        prompt="a fox sitting on a bench",
-        sd_steps=sd_steps,
-        **controlnet_kwargs,
+        prompt="a fox sitting on a bench", sd_steps=sd_steps, **controlnet_kwargs,
     )
 
     name = f"device_{device}"

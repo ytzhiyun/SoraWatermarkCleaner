@@ -150,11 +150,7 @@ class MemoryAttention(nn.Module):
                 kwds = {"num_k_exclude_rope": num_obj_ptr_tokens}
 
             output = layer(
-                tgt=output,
-                memory=memory,
-                pos=memory_pos,
-                query_pos=curr_pos,
-                **kwds,
+                tgt=output, memory=memory, pos=memory_pos, query_pos=curr_pos, **kwds,
             )
         normed_output = self.norm(output)
 

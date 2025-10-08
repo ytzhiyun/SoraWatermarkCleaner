@@ -111,11 +111,7 @@ class Mlp(nn.Module):
 
 class ConvMixer(nn.Module):
     def __init__(
-        self,
-        dim,
-        num_heads=8,
-        HW=(8, 25),
-        local_k=(3, 3),
+        self, dim, num_heads=8, HW=(8, 25), local_k=(3, 3),
     ):
         super().__init__()
         self.HW = HW
@@ -155,7 +151,7 @@ class Attention(nn.Module):
         super().__init__()
         self.num_heads = num_heads
         head_dim = dim // num_heads
-        self.scale = qk_scale or head_dim**-0.5
+        self.scale = qk_scale or head_dim ** -0.5
 
         self.qkv = nn.Linear(dim, dim * 3, bias=qkv_bias)
         self.attn_drop = nn.Dropout(attn_drop)
@@ -279,7 +275,7 @@ class PatchEmbed(nn.Module):
 
     def __init__(self, img_size=(32, 100), in_channels=3, embed_dim=768, sub_num=2):
         super().__init__()
-        num_patches = (img_size[1] // (2**sub_num)) * (img_size[0] // (2**sub_num))
+        num_patches = (img_size[1] // (2 ** sub_num)) * (img_size[0] // (2 ** sub_num))
         self.img_size = img_size
         self.num_patches = num_patches
         self.embed_dim = embed_dim
@@ -444,7 +440,7 @@ class SVTRNet(nn.Module):
             sub_num=sub_num,
         )
         num_patches = self.patch_embed.num_patches
-        self.HW = [img_size[0] // (2**sub_num), img_size[1] // (2**sub_num)]
+        self.HW = [img_size[0] // (2 ** sub_num), img_size[1] // (2 ** sub_num)]
         self.pos_embed = nn.Parameter(torch.zeros(1, num_patches, embed_dim[0]))
         # self.pos_embed = self.create_parameter(
         #     shape=[1, num_patches, embed_dim[0]], default_initializer=zeros_)

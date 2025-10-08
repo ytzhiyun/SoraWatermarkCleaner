@@ -61,10 +61,7 @@ class SAM2ImagePredictor:
         ]
 
     @torch.no_grad()
-    def set_image(
-        self,
-        image: Union[np.ndarray, Image],
-    ) -> None:
+    def set_image(self, image: Union[np.ndarray, Image],) -> None:
         """
         Calculates the image embeddings for the provided image, allowing
         masks to be predicted with the 'predict' method.
@@ -107,10 +104,7 @@ class SAM2ImagePredictor:
         logging.info("Image embeddings computed.")
 
     @torch.no_grad()
-    def set_image_batch(
-        self,
-        image_list: List[Union[np.ndarray]],
-    ) -> None:
+    def set_image_batch(self, image_list: List[Union[np.ndarray]],) -> None:
         """
         Calculates the image embeddings for the provided image batch, allowing
         masks to be predicted with the 'predict_batch' method.
@@ -381,9 +375,7 @@ class SAM2ImagePredictor:
                 concat_points = (box_coords, box_labels)
 
         sparse_embeddings, dense_embeddings = self.model.sam_prompt_encoder(
-            points=concat_points,
-            boxes=None,
-            masks=mask_input,
+            points=concat_points, boxes=None, masks=mask_input,
         )
 
         # Predict masks

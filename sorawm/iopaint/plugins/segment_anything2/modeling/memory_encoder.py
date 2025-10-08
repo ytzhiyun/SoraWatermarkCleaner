@@ -34,11 +34,11 @@ class MaskDownSampler(nn.Module):
     ):
         super().__init__()
         num_layers = int(math.log2(total_stride) // math.log2(stride))
-        assert stride**num_layers == total_stride
+        assert stride ** num_layers == total_stride
         self.encoder = nn.Sequential()
         mask_in_chans, mask_out_chans = 1, 1
         for _ in range(num_layers):
-            mask_out_chans = mask_in_chans * (stride**2)
+            mask_out_chans = mask_in_chans * (stride ** 2)
             self.encoder.append(
                 nn.Conv2d(
                     mask_in_chans,

@@ -68,10 +68,7 @@ class TwoWayTransformer(nn.Module):
         self.norm_final_attn = nn.LayerNorm(embedding_dim)
 
     def forward(
-        self,
-        image_embedding: Tensor,
-        image_pe: Tensor,
-        point_embedding: Tensor,
+        self, image_embedding: Tensor, image_pe: Tensor, point_embedding: Tensor,
     ) -> Tuple[Tensor, Tensor]:
         """
         Args:
@@ -98,10 +95,7 @@ class TwoWayTransformer(nn.Module):
         # Apply transformer blocks and final layernorm
         for layer in self.layers:
             queries, keys = layer(
-                queries=queries,
-                keys=keys,
-                query_pe=point_embedding,
-                key_pe=image_pe,
+                queries=queries, keys=keys, query_pe=point_embedding, key_pe=image_pe,
             )
 
         # Apply the final attention layer from the points to the image

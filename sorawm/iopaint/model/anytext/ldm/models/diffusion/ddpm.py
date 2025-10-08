@@ -17,18 +17,30 @@ from torchvision.utils import make_grid
 from tqdm import tqdm
 
 from sorawm.iopaint.model.anytext.ldm.models.autoencoder import (
-    AutoencoderKL, IdentityFirstStage)
+    AutoencoderKL,
+    IdentityFirstStage,
+)
 from sorawm.iopaint.model.anytext.ldm.models.diffusion.ddim import DDIMSampler
 from sorawm.iopaint.model.anytext.ldm.modules.diffusionmodules.util import (
-    extract_into_tensor, make_beta_schedule, noise_like)
+    extract_into_tensor,
+    make_beta_schedule,
+    noise_like,
+)
 from sorawm.iopaint.model.anytext.ldm.modules.distributions.distributions import (
-    DiagonalGaussianDistribution, normal_kl)
+    DiagonalGaussianDistribution,
+    normal_kl,
+)
 from sorawm.iopaint.model.anytext.ldm.modules.ema import LitEma
-from sorawm.iopaint.model.anytext.ldm.util import (count_params, default,
-                                                   exists,
-                                                   instantiate_from_config,
-                                                   isimage, ismap,
-                                                   log_txt_as_img, mean_flat)
+from sorawm.iopaint.model.anytext.ldm.util import (
+    count_params,
+    default,
+    exists,
+    instantiate_from_config,
+    isimage,
+    ismap,
+    log_txt_as_img,
+    mean_flat,
+)
 
 __conditioning_keys__ = {"concat": "c_concat", "crossattn": "c_crossattn", "adm": "y"}
 
@@ -250,7 +262,7 @@ class DDPM(torch.nn.Module):
         )
 
         if self.parameterization == "eps":
-            lvlb_weights = self.betas**2 / (
+            lvlb_weights = self.betas ** 2 / (
                 2
                 * self.posterior_variance
                 * to_torch(alphas)
@@ -264,7 +276,7 @@ class DDPM(torch.nn.Module):
             )
         elif self.parameterization == "v":
             lvlb_weights = torch.ones_like(
-                self.betas**2
+                self.betas ** 2
                 / (
                     2
                     * self.posterior_variance
@@ -729,9 +741,7 @@ class LatentDiffusion(DDPM):
             assert self.use_ema
             self.model_ema.reset_num_updates()
 
-    def make_cond_schedule(
-        self,
-    ):
+    def make_cond_schedule(self,):
         self.cond_ids = torch.full(
             size=(self.num_timesteps,),
             fill_value=self.num_timesteps - 1,
@@ -1228,9 +1238,10 @@ class LatentDiffusion(DDPM):
         nonzero_mask = (1 - (t == 0).float()).reshape(b, *((1,) * (len(x.shape) - 1)))
 
         if return_codebook_ids:
-            return model_mean + nonzero_mask * (
-                0.5 * model_log_variance
-            ).exp() * noise, logits.argmax(dim=1)
+            return (
+                model_mean + nonzero_mask * (0.5 * model_log_variance).exp() * noise,
+                logits.argmax(dim=1),
+            )
         if return_x0:
             return (
                 model_mean + nonzero_mask * (0.5 * model_log_variance).exp() * noise,
@@ -2258,15 +2269,13 @@ class LatentDepth2ImageDiffusion(LatentFinetuneDiffusion):
                 cc = cc.to(self.device)
             cc = self.depth_model(cc)
             cc = torch.nn.functional.interpolate(
-                cc,
-                size=z.shape[2:],
-                mode="bicubic",
-                align_corners=False,
+                cc, size=z.shape[2:], mode="bicubic", align_corners=False,
             )
 
-            depth_min, depth_max = torch.amin(
-                cc, dim=[1, 2, 3], keepdim=True
-            ), torch.amax(cc, dim=[1, 2, 3], keepdim=True)
+            depth_min, depth_max = (
+                torch.amin(cc, dim=[1, 2, 3], keepdim=True),
+                torch.amax(cc, dim=[1, 2, 3], keepdim=True),
+            )
             cc = 2.0 * (cc - depth_min) / (depth_max - depth_min + 0.001) - 1.0
             c_cat.append(cc)
         c_cat = torch.cat(c_cat, dim=1)
@@ -2279,9 +2288,10 @@ class LatentDepth2ImageDiffusion(LatentFinetuneDiffusion):
     def log_images(self, *args, **kwargs):
         log = super().log_images(*args, **kwargs)
         depth = self.depth_model(args[0][self.depth_stage_key])
-        depth_min, depth_max = torch.amin(
-            depth, dim=[1, 2, 3], keepdim=True
-        ), torch.amax(depth, dim=[1, 2, 3], keepdim=True)
+        depth_min, depth_max = (
+            torch.amin(depth, dim=[1, 2, 3], keepdim=True),
+            torch.amax(depth, dim=[1, 2, 3], keepdim=True),
+        )
         log["depth"] = 2.0 * (depth - depth_min) / (depth_max - depth_min) - 1.0
         return log
 

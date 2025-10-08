@@ -10,7 +10,7 @@ from starlette.responses import FileResponse
 from ..schema import MediasResponse, MediaTab
 
 LARGE_ENOUGH_NUMBER = 100
-PngImagePlugin.MAX_TEXT_CHUNK = LARGE_ENOUGH_NUMBER * (1024**2)
+PngImagePlugin.MAX_TEXT_CHUNK = LARGE_ENOUGH_NUMBER * (1024 ** 2)
 from .storage_backends import FilesystemStorageBackend
 from .utils import aspect_to_string, generate_filename, glob_img
 
@@ -52,10 +52,7 @@ class FileManager:
         thumbnail_filepath = self.thumbnail_directory / thumb_filename
         return FileResponse(
             thumbnail_filepath,
-            headers={
-                "X-Width": str(width),
-                "X-Height": str(height),
-            },
+            headers={"X-Width": str(width), "X-Height": str(height),},
             media_type="image/jpeg",
         )
 

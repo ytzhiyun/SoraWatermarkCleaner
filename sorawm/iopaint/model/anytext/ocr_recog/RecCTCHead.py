@@ -13,22 +13,10 @@ class CTCHead(nn.Module):
     ):
         super(CTCHead, self).__init__()
         if mid_channels is None:
-            self.fc = nn.Linear(
-                in_channels,
-                out_channels,
-                bias=True,
-            )
+            self.fc = nn.Linear(in_channels, out_channels, bias=True,)
         else:
-            self.fc1 = nn.Linear(
-                in_channels,
-                mid_channels,
-                bias=True,
-            )
-            self.fc2 = nn.Linear(
-                mid_channels,
-                out_channels,
-                bias=True,
-            )
+            self.fc1 = nn.Linear(in_channels, mid_channels, bias=True,)
+            self.fc2 = nn.Linear(mid_channels, out_channels, bias=True,)
 
         self.out_channels = out_channels
         self.mid_channels = mid_channels

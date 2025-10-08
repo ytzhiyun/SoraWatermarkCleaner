@@ -54,9 +54,7 @@ class Sam(nn.Module):
 
     @torch.no_grad()
     def forward(
-        self,
-        batched_input: List[Dict[str, Any]],
-        multimask_output: bool,
+        self, batched_input: List[Dict[str, Any]], multimask_output: bool,
     ) -> List[Dict[str, torch.Tensor]]:
         """
         Predicts masks end-to-end from provided images and prompts.

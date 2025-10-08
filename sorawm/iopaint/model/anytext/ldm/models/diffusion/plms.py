@@ -6,10 +6,14 @@ import numpy as np
 import torch
 from tqdm import tqdm
 
-from sorawm.iopaint.model.anytext.ldm.models.diffusion.sampling_util import \
-    norm_thresholding
+from sorawm.iopaint.model.anytext.ldm.models.diffusion.sampling_util import (
+    norm_thresholding,
+)
 from sorawm.iopaint.model.anytext.ldm.modules.diffusionmodules.util import (
-    make_ddim_sampling_parameters, make_ddim_timesteps, noise_like)
+    make_ddim_sampling_parameters,
+    make_ddim_timesteps,
+    noise_like,
+)
 
 
 class PLMSSampler(object):
@@ -336,7 +340,7 @@ class PLMSSampler(object):
             if dynamic_threshold is not None:
                 pred_x0 = norm_thresholding(pred_x0, dynamic_threshold)
             # direction pointing to x_t
-            dir_xt = (1.0 - a_prev - sigma_t**2).sqrt() * e_t
+            dir_xt = (1.0 - a_prev - sigma_t ** 2).sqrt() * e_t
             noise = sigma_t * noise_like(x.shape, device, repeat_noise) * temperature
             if noise_dropout > 0.0:
                 noise = torch.nn.functional.dropout(noise, p=noise_dropout)

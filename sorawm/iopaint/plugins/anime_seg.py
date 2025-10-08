@@ -422,10 +422,7 @@ class AnimeSeg(BasePlugin):
     def __init__(self):
         super().__init__()
         self.model = load_model(
-            ISNetDIS(),
-            ANIME_SEG_MODELS["url"],
-            "cpu",
-            ANIME_SEG_MODELS["md5"],
+            ISNetDIS(), ANIME_SEG_MODELS["url"], "cpu", ANIME_SEG_MODELS["md5"],
         )
 
     def gen_image(self, rgb_np_img, req: RunPluginRequest) -> np.ndarray:

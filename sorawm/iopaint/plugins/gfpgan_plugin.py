@@ -30,8 +30,8 @@ class GFPGANPlugin(BasePlugin):
             bg_upsampler=upscaler.model if upscaler is not None else None,
         )
         self.face_enhancer.face_helper.face_det.mean_tensor.to(device)
-        self.face_enhancer.face_helper.face_det = (
-            self.face_enhancer.face_helper.face_det.to(device)
+        self.face_enhancer.face_helper.face_det = self.face_enhancer.face_helper.face_det.to(
+            device
         )
 
     def gen_image(self, rgb_np_img, req: RunPluginRequest) -> np.ndarray:

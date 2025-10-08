@@ -8,13 +8,20 @@ from typing import Any
 
 import numpy as np
 import torch
-from diffusers import (DDIMScheduler, DPMSolverMultistepScheduler,
-                       DPMSolverSinglestepScheduler,
-                       EulerAncestralDiscreteScheduler, EulerDiscreteScheduler,
-                       HeunDiscreteScheduler, KDPM2AncestralDiscreteScheduler,
-                       KDPM2DiscreteScheduler, LCMScheduler,
-                       LMSDiscreteScheduler, PNDMScheduler,
-                       UniPCMultistepScheduler)
+from diffusers import (
+    DDIMScheduler,
+    DPMSolverMultistepScheduler,
+    DPMSolverSinglestepScheduler,
+    EulerAncestralDiscreteScheduler,
+    EulerDiscreteScheduler,
+    HeunDiscreteScheduler,
+    KDPM2AncestralDiscreteScheduler,
+    KDPM2DiscreteScheduler,
+    LCMScheduler,
+    LMSDiscreteScheduler,
+    PNDMScheduler,
+    UniPCMultistepScheduler,
+)
 from loguru import logger
 from torch import conv2d, conv_transpose2d
 
@@ -27,7 +34,7 @@ def make_beta_schedule(
     if schedule == "linear":
         betas = (
             torch.linspace(
-                linear_start**0.5, linear_end**0.5, n_timestep, dtype=torch.float64
+                linear_start ** 0.5, linear_end ** 0.5, n_timestep, dtype=torch.float64
             )
             ** 2
         )
@@ -772,7 +779,7 @@ def conv2d_resample(
             f=f,
             up=up,
             padding=[px0, px1, py0, py1],
-            gain=up**2,
+            gain=up ** 2,
             flip_filter=flip_filter,
         )
         return x
@@ -814,7 +821,7 @@ def conv2d_resample(
             x=x,
             f=f,
             padding=[px0 + pxt, px1 + pxt, py0 + pyt, py1 + pyt],
-            gain=up**2,
+            gain=up ** 2,
             flip_filter=flip_filter,
         )
         if down > 1:
@@ -834,7 +841,7 @@ def conv2d_resample(
         f=(f if up > 1 else None),
         up=up,
         padding=[px0, px1, py0, py1],
-        gain=up**2,
+        gain=up ** 2,
         flip_filter=flip_filter,
     )
     x = _conv2d_wrapper(x=x, w=w, groups=groups, flip_weight=flip_weight)
@@ -870,7 +877,7 @@ class Conv2dLayer(torch.nn.Module):
         self.register_buffer("resample_filter", setup_filter(resample_filter))
         self.conv_clamp = conv_clamp
         self.padding = kernel_size // 2
-        self.weight_gain = 1 / np.sqrt(in_channels * (kernel_size**2))
+        self.weight_gain = 1 / np.sqrt(in_channels * (kernel_size ** 2))
         self.act_gain = activation_funcs[activation].def_gain
 
         memory_format = (

@@ -7,23 +7,41 @@ import torch
 import torch.nn.functional as F
 from diffusers import StableDiffusionMixin, UNet2DConditionModel
 from diffusers.image_processor import PipelineImageInput, VaeImageProcessor
-from diffusers.loaders import (FromSingleFileMixin, IPAdapterMixin,
-                               LoraLoaderMixin, TextualInversionLoaderMixin)
+from diffusers.loaders import (
+    FromSingleFileMixin,
+    IPAdapterMixin,
+    LoraLoaderMixin,
+    TextualInversionLoaderMixin,
+)
 from diffusers.models import AutoencoderKL, ImageProjection
 from diffusers.models.lora import adjust_lora_scale_text_encoder
 from diffusers.pipelines.pipeline_utils import DiffusionPipeline
-from diffusers.pipelines.stable_diffusion.pipeline_output import \
-    StableDiffusionPipelineOutput
-from diffusers.pipelines.stable_diffusion.safety_checker import \
-    StableDiffusionSafetyChecker
+from diffusers.pipelines.stable_diffusion.pipeline_output import (
+    StableDiffusionPipelineOutput,
+)
+from diffusers.pipelines.stable_diffusion.safety_checker import (
+    StableDiffusionSafetyChecker,
+)
 from diffusers.schedulers import KarrasDiffusionSchedulers
-from diffusers.utils import (USE_PEFT_BACKEND, deprecate, logging,
-                             replace_example_docstring, scale_lora_layers,
-                             unscale_lora_layers)
-from diffusers.utils.torch_utils import (is_compiled_module, is_torch_version,
-                                         randn_tensor)
-from transformers import (CLIPImageProcessor, CLIPTextModel, CLIPTokenizer,
-                          CLIPVisionModelWithProjection)
+from diffusers.utils import (
+    USE_PEFT_BACKEND,
+    deprecate,
+    logging,
+    replace_example_docstring,
+    scale_lora_layers,
+    unscale_lora_layers,
+)
+from diffusers.utils.torch_utils import (
+    is_compiled_module,
+    is_torch_version,
+    randn_tensor,
+)
+from transformers import (
+    CLIPImageProcessor,
+    CLIPTextModel,
+    CLIPTokenizer,
+    CLIPVisionModelWithProjection,
+)
 
 from .BrushNet_CA import BrushNetModel
 
@@ -331,14 +349,12 @@ class StableDiffusionPowerPaintBrushNetPipeline(
             # print('t: ',t)
 
             prompt_embedsA = self.text_encoder_brushnet(
-                text_input_idsA.to(device),
-                attention_mask=attention_mask,
+                text_input_idsA.to(device), attention_mask=attention_mask,
             )
             prompt_embedsA = prompt_embedsA[0]
 
             prompt_embedsB = self.text_encoder_brushnet(
-                text_input_idsB.to(device),
-                attention_mask=attention_mask,
+                text_input_idsB.to(device), attention_mask=attention_mask,
             )
             prompt_embedsB = prompt_embedsB[0]
             prompt_embeds = prompt_embedsA * (t) + (1 - t) * prompt_embedsB
@@ -419,12 +435,10 @@ class StableDiffusionPowerPaintBrushNetPipeline(
                 attention_mask = None
 
             negative_prompt_embedsA = self.text_encoder_brushnet(
-                uncond_inputA.input_ids.to(device),
-                attention_mask=attention_mask,
+                uncond_inputA.input_ids.to(device), attention_mask=attention_mask,
             )
             negative_prompt_embedsB = self.text_encoder_brushnet(
-                uncond_inputB.input_ids.to(device),
-                attention_mask=attention_mask,
+                uncond_inputB.input_ids.to(device), attention_mask=attention_mask,
             )
             negative_prompt_embeds = (
                 negative_prompt_embedsA[0] * (t_nag)
@@ -640,8 +654,7 @@ class StableDiffusionPowerPaintBrushNetPipeline(
                 attention_mask = None
 
             negative_prompt_embeds = self.text_encoder(
-                uncond_input.input_ids.to(device),
-                attention_mask=attention_mask,
+                uncond_input.input_ids.to(device), attention_mask=attention_mask,
             )
             negative_prompt_embeds = negative_prompt_embeds[0]
 
@@ -688,10 +701,8 @@ class StableDiffusionPowerPaintBrushNetPipeline(
             uncond_image_enc_hidden_states = self.image_encoder(
                 torch.zeros_like(image), output_hidden_states=True
             ).hidden_states[-2]
-            uncond_image_enc_hidden_states = (
-                uncond_image_enc_hidden_states.repeat_interleave(
-                    num_images_per_prompt, dim=0
-                )
+            uncond_image_enc_hidden_states = uncond_image_enc_hidden_states.repeat_interleave(
+                num_images_per_prompt, dim=0
             )
             return image_enc_hidden_states, uncond_image_enc_hidden_states
         else:

@@ -6,8 +6,7 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 
-from sorawm.iopaint.helper import (download_model, get_cache_path_by_url,
-                                   load_jit_model)
+from sorawm.iopaint.helper import download_model, get_cache_path_by_url, load_jit_model
 from sorawm.iopaint.schema import InpaintRequest
 
 from .base import InpaintModel
@@ -282,11 +281,7 @@ class ZITS(InpaintModel):
         start = time.time()
         try:
             line_256 = self.wireframe_forward(
-                items["img_512"],
-                h=256,
-                w=256,
-                masks=items["mask_512"],
-                mask_th=0.85,
+                items["img_512"], h=256, w=256, masks=items["mask_512"], mask_th=0.85,
             )
         except:
             line_256 = torch.zeros_like(items["mask_256"])

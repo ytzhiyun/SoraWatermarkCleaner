@@ -3,8 +3,7 @@ import torch
 from loguru import logger
 from tqdm import tqdm
 
-from .utils import (make_ddim_sampling_parameters, make_ddim_timesteps,
-                    noise_like)
+from .utils import make_ddim_sampling_parameters, make_ddim_timesteps, noise_like
 
 
 class DDIMSampler(object):
@@ -185,7 +184,7 @@ class DDIMSampler(object):
         if quantize_denoised:  # 没用
             pred_x0, _, *_ = self.model.first_stage_model.quantize(pred_x0)
         # direction pointing to x_t
-        dir_xt = (1.0 - a_prev - sigma_t**2).sqrt() * e_t
+        dir_xt = (1.0 - a_prev - sigma_t ** 2).sqrt() * e_t
         noise = sigma_t * noise_like(x.shape, device, repeat_noise) * temperature
         if noise_dropout > 0.0:  # 没用
             noise = torch.nn.functional.dropout(noise, p=noise_dropout)
