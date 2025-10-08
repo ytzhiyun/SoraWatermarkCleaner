@@ -78,13 +78,16 @@ streamlit run app.py
 
 <img src="resources/app.png" style="zoom: 25%;" />
 
-## 4. License
+## 4. API
+
+Packaged as a Cog and [published to Replicate](https://replicate.com/uglyrobot/sora2-watermark-remover) for simple API based usage.
+
+## 5. License
 
  Apache License
 
 
-
-## 5. Citation
+## 6. Citation
 
 If you use this project, please cite:
 
@@ -97,7 +100,7 @@ If you use this project, please cite:
 }
 ```
 
-## 6. Acknowledgments
+## 7. Acknowledgments
 
 - [IOPaint](https://github.com/Sanster/IOPaint) for the LAMA implementation
 - [Ultralytics YOLO](https://github.com/ultralytics/ultralytics) for object detection
