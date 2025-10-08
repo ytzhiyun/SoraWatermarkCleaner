@@ -21,10 +21,8 @@ import torch
 from PIL import ImageFont
 
 from sorawm.iopaint.model.anytext.cldm.ddim_hacked import DDIMSampler
-from sorawm.iopaint.model.anytext.cldm.model import (create_model,
-                                                     load_state_dict)
-from sorawm.iopaint.model.anytext.utils import (check_channels, draw_glyph,
-                                                draw_glyph2)
+from sorawm.iopaint.model.anytext.cldm.model import create_model, load_state_dict
+from sorawm.iopaint.model.anytext.utils import check_channels, draw_glyph, draw_glyph2
 
 BBOX_MAX_NUM = 8
 PLACE_HOLDER = "*"
@@ -55,9 +53,7 @@ class AnyTextPipeline:
 
         self.font = ImageFont.truetype(font_path, size=60)
         self.model = create_model(
-            self.cfg_path,
-            device=self.device,
-            use_fp16=self.use_fp16,
+            self.cfg_path, device=self.device, use_fp16=self.use_fp16,
         )
         if self.use_fp16:
             self.model = self.model.half()
@@ -285,11 +281,7 @@ class AnyTextPipeline:
 
         hint = self.arr2tensor(np_hint, img_count)
         cond = self.model.get_learned_conditioning(
-            dict(
-                c_concat=[hint],
-                c_crossattn=[[prompt] * img_count],
-                text_info=info,
-            )
+            dict(c_concat=[hint], c_crossattn=[[prompt] * img_count], text_info=info,)
         )
         un_cond = self.model.get_learned_conditioning(
             dict(

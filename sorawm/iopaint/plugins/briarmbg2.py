@@ -10,8 +10,14 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.utils.checkpoint as checkpoint
 from timm.models.layers import DropPath, to_2tuple, trunc_normal_
-from torchvision.models import (ResNet50_Weights, VGG16_BN_Weights,
-                                VGG16_Weights, resnet50, vgg16, vgg16_bn)
+from torchvision.models import (
+    ResNet50_Weights,
+    VGG16_BN_Weights,
+    VGG16_Weights,
+    resnet50,
+    vgg16,
+    vgg16_bn,
+)
 from transformers import PretrainedConfig, PreTrainedModel
 
 
@@ -137,9 +143,7 @@ class Config:
         )
         self.refine_iteration = 1
         self.freeze_bb = False
-        self.model = [
-            "BiRefNet",
-        ][0]
+        self.model = ["BiRefNet",][0]
         if self.dec_blk == "HierarAttDecBlk":
             self.batch_size = 2 ** [0, 1, 2, 3, 4][2]
 
@@ -291,7 +295,7 @@ class Attention(nn.Module):
         self.dim = dim
         self.num_heads = num_heads
         head_dim = dim // num_heads
-        self.scale = qk_scale or head_dim**-0.5
+        self.scale = qk_scale or head_dim ** -0.5
 
         self.q = nn.Linear(dim, dim, bias=qkv_bias)
         self.kv = nn.Linear(dim, dim * 2, bias=qkv_bias)
@@ -949,7 +953,7 @@ class WindowAttention(nn.Module):
         self.window_size = window_size  # Wh, Ww
         self.num_heads = num_heads
         head_dim = dim // num_heads
-        self.scale = qk_scale or head_dim**-0.5
+        self.scale = qk_scale or head_dim ** -0.5
 
         # define a parameter table of relative position bias
         self.relative_position_bias_table = nn.Parameter(
@@ -1491,7 +1495,7 @@ class SwinTransformer(nn.Module):
         self.layers = nn.ModuleList()
         for i_layer in range(self.num_layers):
             layer = BasicLayer(
-                dim=int(embed_dim * 2**i_layer),
+                dim=int(embed_dim * 2 ** i_layer),
                 depth=depths[i_layer],
                 num_heads=num_heads[i_layer],
                 window_size=window_size,
@@ -1507,7 +1511,7 @@ class SwinTransformer(nn.Module):
             )
             self.layers.append(layer)
 
-        num_features = [int(embed_dim * 2**i) for i in range(self.num_layers)]
+        num_features = [int(embed_dim * 2 ** i) for i in range(self.num_layers)]
         self.num_features = num_features
 
         # add a norm layer for each output
@@ -2612,27 +2616,27 @@ class Decoder(nn.Module):
             ic = 64
             ipt_cha_opt = 1
             self.ipt_blk5 = DBlock(
-                2**10 * 3 if self.split else 3,
+                2 ** 10 * 3 if self.split else 3,
                 [N_dec_ipt, channels[0] // 8][ipt_cha_opt],
                 inter_channels=ic,
             )
             self.ipt_blk4 = DBlock(
-                2**8 * 3 if self.split else 3,
+                2 ** 8 * 3 if self.split else 3,
                 [N_dec_ipt, channels[0] // 8][ipt_cha_opt],
                 inter_channels=ic,
             )
             self.ipt_blk3 = DBlock(
-                2**6 * 3 if self.split else 3,
+                2 ** 6 * 3 if self.split else 3,
                 [N_dec_ipt, channels[1] // 8][ipt_cha_opt],
                 inter_channels=ic,
             )
             self.ipt_blk2 = DBlock(
-                2**4 * 3 if self.split else 3,
+                2 ** 4 * 3 if self.split else 3,
                 [N_dec_ipt, channels[2] // 8][ipt_cha_opt],
                 inter_channels=ic,
             )
             self.ipt_blk1 = DBlock(
-                2**0 * 3 if self.split else 3,
+                2 ** 0 * 3 if self.split else 3,
                 [N_dec_ipt, channels[3] // 8][ipt_cha_opt],
                 inter_channels=ic,
             )

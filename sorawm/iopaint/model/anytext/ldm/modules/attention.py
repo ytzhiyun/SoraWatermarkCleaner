@@ -1,4 +1,5 @@
 import math
+
 # CrossAttn precision handling
 import os
 from inspect import isfunction
@@ -9,8 +10,7 @@ import torch.nn.functional as F
 from einops import rearrange, repeat
 from torch import einsum, nn
 
-from sorawm.iopaint.model.anytext.ldm.modules.diffusionmodules.util import \
-    checkpoint
+from sorawm.iopaint.model.anytext.ldm.modules.diffusionmodules.util import checkpoint
 
 _ATTN_PRECISION = os.environ.get("ATTN_PRECISION", "fp32")
 
@@ -136,7 +136,7 @@ class CrossAttention(nn.Module):
         inner_dim = dim_head * heads
         context_dim = default(context_dim, query_dim)
 
-        self.scale = dim_head**-0.5
+        self.scale = dim_head ** -0.5
         self.heads = heads
 
         self.to_q = nn.Linear(query_dim, inner_dim, bias=False)

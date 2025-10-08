@@ -16,8 +16,13 @@ from typing import Any, Dict, Optional, Tuple, Union
 import torch
 import torch.utils.checkpoint
 from diffusers.models.unets.unet_2d_condition import UNet2DConditionOutput
-from diffusers.utils import (USE_PEFT_BACKEND, deprecate, logging,
-                             scale_lora_layers, unscale_lora_layers)
+from diffusers.utils import (
+    USE_PEFT_BACKEND,
+    deprecate,
+    logging,
+    scale_lora_layers,
+    unscale_lora_layers,
+)
 
 logger = logging.get_logger(__name__)  # pylint: disable=invalid-name
 
@@ -99,7 +104,7 @@ def UNet2DConditionModel_forward(
     # The overall upsampling factor is equal to 2 ** (# num of upsampling layers).
     # However, the upsampling interpolation output size can be forced to fit any upsampling size
     # on the fly if necessary.
-    default_overall_up_factor = 2**self.num_upsamplers
+    default_overall_up_factor = 2 ** self.num_upsamplers
 
     # upsample size should be forwarded when sample is not a multiple of `default_overall_up_factor`
     forward_upsample_size = False

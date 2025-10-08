@@ -32,11 +32,7 @@ def do_pool(x: torch.Tensor, pool: nn.Module, norm: nn.Module = None) -> torch.T
 
 class MultiScaleAttention(nn.Module):
     def __init__(
-        self,
-        dim: int,
-        dim_out: int,
-        num_heads: int,
-        q_pool: nn.Module = None,
+        self, dim: int, dim_out: int, num_heads: int, q_pool: nn.Module = None,
     ):
         super().__init__()
 
@@ -62,9 +58,7 @@ class MultiScaleAttention(nn.Module):
 
         # Torch's SDPA expects [B, nheads, H*W, C] so we transpose
         x = F.scaled_dot_product_attention(
-            q.transpose(1, 2),
-            k.transpose(1, 2),
-            v.transpose(1, 2),
+            q.transpose(1, 2), k.transpose(1, 2), v.transpose(1, 2),
         )
         # Transpose back
         x = x.transpose(1, 2)
@@ -106,10 +100,7 @@ class MultiScaleBlock(nn.Module):
             )
 
         self.attn = MultiScaleAttention(
-            dim,
-            dim_out,
-            num_heads=num_heads,
-            q_pool=self.pool,
+            dim, dim_out, num_heads=num_heads, q_pool=self.pool,
         )
         self.drop_path = DropPath(drop_path) if drop_path > 0.0 else nn.Identity()
 
@@ -177,18 +168,9 @@ class Hiera(nn.Module):
         head_mul: float = 2.0,  # head_mul factor at stage shift
         window_pos_embed_bkg_spatial_size: Tuple[int, int] = (14, 14),
         # window size per stage, when not using global att.
-        window_spec: Tuple[int, ...] = (
-            8,
-            4,
-            14,
-            7,
-        ),
+        window_spec: Tuple[int, ...] = (8, 4, 14, 7,),
         # global attn in these blocks
-        global_att_blocks: Tuple[int, ...] = (
-            12,
-            16,
-            20,
-        ),
+        global_att_blocks: Tuple[int, ...] = (12, 16, 20,),
         weights_path=None,
         return_interm_layers=True,  # return feats from every stage
     ):
@@ -204,9 +186,7 @@ class Hiera(nn.Module):
         self.q_pool_blocks = [x + 1 for x in self.stage_ends[:-1]][:q_pool]
         self.return_interm_layers = return_interm_layers
 
-        self.patch_embed = PatchEmbed(
-            embed_dim=embed_dim,
-        )
+        self.patch_embed = PatchEmbed(embed_dim=embed_dim,)
         # Which blocks have global att?
         self.global_att_blocks = global_att_blocks
 

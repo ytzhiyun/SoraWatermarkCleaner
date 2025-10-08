@@ -12,10 +12,7 @@ import torch.nn as nn
 
 class MLPBlock(nn.Module):
     def __init__(
-        self,
-        embedding_dim: int,
-        mlp_dim: int,
-        act: Type[nn.Module] = nn.GELU,
+        self, embedding_dim: int, mlp_dim: int, act: Type[nn.Module] = nn.GELU,
     ) -> None:
         super().__init__()
         self.lin1 = nn.Linear(embedding_dim, mlp_dim)

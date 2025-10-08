@@ -340,12 +340,7 @@ def decode_base64_to_image(
 
 
 def encode_pil_to_base64(image: Image, quality: int, infos: Dict) -> bytes:
-    img_bytes = pil_to_bytes(
-        image,
-        "png",
-        quality=quality,
-        infos=infos,
-    )
+    img_bytes = pil_to_bytes(image, "png", quality=quality, infos=infos,)
     return base64.b64encode(img_bytes)
 
 
@@ -374,17 +369,9 @@ def adjust_mask(mask: np.ndarray, kernel_size: int, operate):
             cv2.MORPH_ELLIPSE, (2 * kernel_size + 1, 2 * kernel_size + 1)
         )
         if operate == "expand":
-            mask = cv2.dilate(
-                mask,
-                kernel,
-                iterations=1,
-            )
+            mask = cv2.dilate(mask, kernel, iterations=1,)
         else:
-            mask = cv2.erode(
-                mask,
-                kernel,
-                iterations=1,
-            )
+            mask = cv2.erode(mask, kernel, iterations=1,)
     res_mask = np.zeros((mask.shape[0], mask.shape[1], 4), dtype=np.uint8)
     res_mask[mask > 128] = [255, 203, 0, int(255 * 0.73)]
     res_mask = cv2.cvtColor(res_mask, cv2.COLOR_BGRA2RGBA)
@@ -399,9 +386,7 @@ def gen_frontend_mask(bgr_or_gray_mask):
     # TODO: how to set kernel size?
     kernel_size = 9
     bgr_or_gray_mask = cv2.dilate(
-        bgr_or_gray_mask,
-        np.ones((kernel_size, kernel_size), np.uint8),
-        iterations=1,
+        bgr_or_gray_mask, np.ones((kernel_size, kernel_size), np.uint8), iterations=1,
     )
     res_mask = np.zeros(
         (bgr_or_gray_mask.shape[0], bgr_or_gray_mask.shape[1], 4), dtype=np.uint8

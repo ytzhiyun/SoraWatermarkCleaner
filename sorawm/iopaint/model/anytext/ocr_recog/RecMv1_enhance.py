@@ -29,9 +29,7 @@ class ConvBNLayer(nn.Module):
             bias=False,
         )
 
-        self._batch_norm = nn.BatchNorm2d(
-            num_filters,
-        )
+        self._batch_norm = nn.BatchNorm2d(num_filters,)
         if self.act is not None:
             self._act = Activation(act_type=act, inplace=True)
 

@@ -20,17 +20,28 @@ import PIL
 import torch
 from diffusers.configuration_utils import FrozenDict
 from diffusers.image_processor import VaeImageProcessor
-from diffusers.loaders import (FromSingleFileMixin, LoraLoaderMixin,
-                               TextualInversionLoaderMixin)
-from diffusers.models import (AsymmetricAutoencoderKL, AutoencoderKL,
-                              UNet2DConditionModel)
+from diffusers.loaders import (
+    FromSingleFileMixin,
+    LoraLoaderMixin,
+    TextualInversionLoaderMixin,
+)
+from diffusers.models import (
+    AsymmetricAutoencoderKL,
+    AutoencoderKL,
+    UNet2DConditionModel,
+)
 from diffusers.pipelines.pipeline_utils import DiffusionPipeline
 from diffusers.pipelines.stable_diffusion import StableDiffusionPipelineOutput
-from diffusers.pipelines.stable_diffusion.safety_checker import \
-    StableDiffusionSafetyChecker
+from diffusers.pipelines.stable_diffusion.safety_checker import (
+    StableDiffusionSafetyChecker,
+)
 from diffusers.schedulers import KarrasDiffusionSchedulers
-from diffusers.utils import (deprecate, is_accelerate_available,
-                             is_accelerate_version, logging)
+from diffusers.utils import (
+    deprecate,
+    is_accelerate_available,
+    is_accelerate_version,
+    logging,
+)
 from diffusers.utils.torch_utils import randn_tensor
 from packaging import version
 from transformers import CLIPImageProcessor, CLIPTextModel, CLIPTokenizer
@@ -467,14 +478,12 @@ class StableDiffusionInpaintPipeline(
             # print('t: ',t)
 
             prompt_embedsA = self.text_encoder(
-                text_input_idsA.to(device),
-                attention_mask=attention_mask,
+                text_input_idsA.to(device), attention_mask=attention_mask,
             )
             prompt_embedsA = prompt_embedsA[0]
 
             prompt_embedsB = self.text_encoder(
-                text_input_idsB.to(device),
-                attention_mask=attention_mask,
+                text_input_idsB.to(device), attention_mask=attention_mask,
             )
             prompt_embedsB = prompt_embedsB[0]
             prompt_embeds = prompt_embedsA * (t) + (1 - t) * prompt_embedsB
@@ -555,12 +564,10 @@ class StableDiffusionInpaintPipeline(
                 attention_mask = None
 
             negative_prompt_embedsA = self.text_encoder(
-                uncond_inputA.input_ids.to(device),
-                attention_mask=attention_mask,
+                uncond_inputA.input_ids.to(device), attention_mask=attention_mask,
             )
             negative_prompt_embedsB = self.text_encoder(
-                uncond_inputB.input_ids.to(device),
-                attention_mask=attention_mask,
+                uncond_inputB.input_ids.to(device), attention_mask=attention_mask,
             )
             negative_prompt_embeds = (
                 negative_prompt_embedsA[0] * (t_nag)

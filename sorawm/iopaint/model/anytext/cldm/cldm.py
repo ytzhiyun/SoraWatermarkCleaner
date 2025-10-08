@@ -10,19 +10,29 @@ from easydict import EasyDict as edict
 from einops import rearrange, repeat
 
 from sorawm.iopaint.model.anytext.ldm.models.diffusion.ddim import DDIMSampler
-from sorawm.iopaint.model.anytext.ldm.models.diffusion.ddpm import \
-    LatentDiffusion
-from sorawm.iopaint.model.anytext.ldm.modules.attention import \
-    SpatialTransformer
+from sorawm.iopaint.model.anytext.ldm.models.diffusion.ddpm import LatentDiffusion
+from sorawm.iopaint.model.anytext.ldm.modules.attention import SpatialTransformer
 from sorawm.iopaint.model.anytext.ldm.modules.diffusionmodules.openaimodel import (
-    AttentionBlock, Downsample, ResBlock, TimestepEmbedSequential, UNetModel)
+    AttentionBlock,
+    Downsample,
+    ResBlock,
+    TimestepEmbedSequential,
+    UNetModel,
+)
 from sorawm.iopaint.model.anytext.ldm.modules.diffusionmodules.util import (
-    conv_nd, linear, timestep_embedding, zero_module)
-from sorawm.iopaint.model.anytext.ldm.modules.distributions.distributions import \
-    DiagonalGaussianDistribution
-from sorawm.iopaint.model.anytext.ldm.util import (exists,
-                                                   instantiate_from_config,
-                                                   log_txt_as_img)
+    conv_nd,
+    linear,
+    timestep_embedding,
+    zero_module,
+)
+from sorawm.iopaint.model.anytext.ldm.modules.distributions.distributions import (
+    DiagonalGaussianDistribution,
+)
+from sorawm.iopaint.model.anytext.ldm.util import (
+    exists,
+    instantiate_from_config,
+    log_txt_as_img,
+)
 
 from .recognizer import TextRecognizer, create_predictor
 
@@ -649,10 +659,7 @@ class ControlLDM(LatentDiffusion):
         glyph_bs = torch.stack(text_info["glyphs"])
         glyph_bs = torch.sum(glyph_bs, dim=0) * 2.0 - 1.0
         log["glyph"] = torch.nn.functional.interpolate(
-            glyph_bs,
-            size=(512, 512),
-            mode="bilinear",
-            align_corners=True,
+            glyph_bs, size=(512, 512), mode="bilinear", align_corners=True,
         )
         # fill caption
         if not self.embedding_manager:

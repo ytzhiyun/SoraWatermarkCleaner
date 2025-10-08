@@ -316,9 +316,9 @@ if __name__ == "__main__":
                 k = cv2.waitKey(50) & 0xFF
                 if k in (ord(" "), ord("q")):
                     if k == ord("q"):
-                        idx = 10**9
+                        idx = 10 ** 9
                     break
-            if idx >= 10**9:
+            if idx >= 10 ** 9:
                 break
 
     if writer is not None:

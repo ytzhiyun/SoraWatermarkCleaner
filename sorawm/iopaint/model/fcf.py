@@ -8,16 +8,31 @@ import torch.fft as fft
 import torch.nn.functional as F
 from torch import conv2d, nn
 
-from sorawm.iopaint.helper import (boxes_from_mask, download_model,
-                                   get_cache_path_by_url, load_model, norm_img,
-                                   resize_max_size)
+from sorawm.iopaint.helper import (
+    boxes_from_mask,
+    download_model,
+    get_cache_path_by_url,
+    load_model,
+    norm_img,
+    resize_max_size,
+)
 from sorawm.iopaint.schema import InpaintRequest
 
 from .base import InpaintModel
-from .utils import (Conv2dLayer, FullyConnectedLayer, MinibatchStdLayer,
-                    _parse_padding, _parse_scaling, activation_funcs, bias_act,
-                    conv2d_resample, downsample2d, normalize_2nd_moment,
-                    setup_filter, upsample2d)
+from .utils import (
+    Conv2dLayer,
+    FullyConnectedLayer,
+    MinibatchStdLayer,
+    _parse_padding,
+    _parse_scaling,
+    activation_funcs,
+    bias_act,
+    conv2d_resample,
+    downsample2d,
+    normalize_2nd_moment,
+    setup_filter,
+    upsample2d,
+)
 
 
 def upfirdn2d(x, f, up=1, down=1, padding=0, flip_filter=False, gain=1, impl="cuda"):
@@ -116,7 +131,7 @@ class EncoderEpilogue(torch.nn.Module):
             conv_clamp=conv_clamp,
         )
         self.fc = FullyConnectedLayer(
-            in_channels * (resolution**2), z_dim, activation=activation
+            in_channels * (resolution ** 2), z_dim, activation=activation
         )
         self.dropout = torch.nn.Dropout(p=0.5)
 
@@ -297,7 +312,7 @@ class EncoderNetwork(torch.nn.Module):
         self.img_resolution_log2 = int(np.log2(img_resolution))
         self.img_channels = img_channels
         self.block_resolutions = [
-            2**i for i in range(self.img_resolution_log2, 2, -1)
+            2 ** i for i in range(self.img_resolution_log2, 2, -1)
         ]
         channels_dict = {
             res: min(channel_base // res, channel_max)
@@ -602,7 +617,7 @@ class ToRGBLayer(torch.nn.Module):
             )
         )
         self.bias = torch.nn.Parameter(torch.zeros([out_channels]))
-        self.weight_gain = 1 / np.sqrt(in_channels * (kernel_size**2))
+        self.weight_gain = 1 / np.sqrt(in_channels * (kernel_size ** 2))
 
     def forward(self, x, w, fused_modconv=True):
         styles = self.affine(w) * self.weight_gain
@@ -763,13 +778,7 @@ class FourierUnit(nn.Module):
         ffted = fft.rfftn(x, dim=fft_dim, norm=self.fft_norm)
         ffted = torch.stack((ffted.real, ffted.imag), dim=-1)
         ffted = ffted.permute(0, 1, 4, 2, 3).contiguous()  # (batch, c, 2, h, w/2+1)
-        ffted = ffted.view(
-            (
-                batch,
-                -1,
-            )
-            + ffted.size()[3:]
-        )
+        ffted = ffted.view((batch, -1,) + ffted.size()[3:])
 
         if self.spectral_pos_encoding:
             height, width = ffted.shape[-2:]
@@ -792,14 +801,7 @@ class FourierUnit(nn.Module):
         ffted = self.relu(ffted)
 
         ffted = (
-            ffted.view(
-                (
-                    batch,
-                    -1,
-                    2,
-                )
-                + ffted.size()[2:]
-            )
+            ffted.view((batch, -1, 2,) + ffted.size()[2:])
             .permute(0, 1, 3, 4, 2)
             .contiguous()
         )  # (batch,c, t, h, w/2+1, 2)
@@ -1035,10 +1037,7 @@ class FFC_BN_ACT(nn.Module):
         self.act_g = gact(inplace=True)
 
     def forward(self, x, fname=None):
-        x_l, x_g = self.ffc(
-            x,
-            fname=fname,
-        )
+        x_l, x_g = self.ffc(x, fname=fname,)
         x_l = self.act_l(x_l)
         x_g = self.act_g(x_g)
         return x_l, x_g
@@ -1315,10 +1314,7 @@ class SynthesisBlock(torch.nn.Module):
                 x, ws[0].clone(), fused_modconv=fused_modconv, **layer_kwargs
             )
             if len(self.ffc_skip) > 0:
-                mask = F.interpolate(
-                    mask,
-                    size=x_skip.shape[2:],
-                )
+                mask = F.interpolate(mask, size=x_skip.shape[2:],)
                 z = x + x_skip
                 for fres in self.ffc_skip:
                     z = fres(z, mask)
@@ -1338,10 +1334,7 @@ class SynthesisBlock(torch.nn.Module):
                 x, ws[0].clone(), fused_modconv=fused_modconv, **layer_kwargs
             )
             if len(self.ffc_skip) > 0:
-                mask = F.interpolate(
-                    mask,
-                    size=x_skip.shape[2:],
-                )
+                mask = F.interpolate(mask, size=x_skip.shape[2:],)
                 z = x + x_skip
                 for fres in self.ffc_skip:
                     z = fres(z, mask)
@@ -1384,7 +1377,7 @@ class SynthesisNetwork(torch.nn.Module):
         self.img_resolution_log2 = int(np.log2(img_resolution))
         self.img_channels = img_channels
         self.block_resolutions = [
-            2**i for i in range(3, self.img_resolution_log2 + 1)
+            2 ** i for i in range(3, self.img_resolution_log2 + 1)
         ]
         channels_dict = {
             res: min(channel_base // res, channel_max) for res in self.block_resolutions

@@ -101,9 +101,6 @@ if __name__ == "__main__":
     args = get_args_parser()
     device = torch.device(args.device)
     model = ModelManager(
-        name=args.name,
-        device=device,
-        disable_nsfw=True,
-        sd_cpu_textencoder=True,
+        name=args.name, device=device, disable_nsfw=True, sd_cpu_textencoder=True,
     )
     benchmark(model, args.times, args.empty_cache)

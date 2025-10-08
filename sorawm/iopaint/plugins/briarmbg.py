@@ -453,14 +453,17 @@ class BriaRMBG(nn.Module):
         d6 = self.side6(hx6)
         d6 = _upsample_like(d6, x)
 
-        return [
-            F.sigmoid(d1),
-            F.sigmoid(d2),
-            F.sigmoid(d3),
-            F.sigmoid(d4),
-            F.sigmoid(d5),
-            F.sigmoid(d6),
-        ], [hx1d, hx2d, hx3d, hx4d, hx5d, hx6]
+        return (
+            [
+                F.sigmoid(d1),
+                F.sigmoid(d2),
+                F.sigmoid(d3),
+                F.sigmoid(d4),
+                F.sigmoid(d5),
+                F.sigmoid(d6),
+            ],
+            [hx1d, hx2d, hx3d, hx4d, hx5d, hx6],
+        )
 
 
 def resize_image(image):

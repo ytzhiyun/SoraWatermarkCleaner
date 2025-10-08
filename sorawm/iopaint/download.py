@@ -7,11 +7,14 @@ from typing import List, Optional
 
 from loguru import logger
 
-from sorawm.iopaint.const import (ANYTEXT_NAME, DEFAULT_MODEL_DIR,
-                                  DIFFUSERS_SD_CLASS_NAME,
-                                  DIFFUSERS_SD_INPAINT_CLASS_NAME,
-                                  DIFFUSERS_SDXL_CLASS_NAME,
-                                  DIFFUSERS_SDXL_INPAINT_CLASS_NAME)
+from sorawm.iopaint.const import (
+    ANYTEXT_NAME,
+    DEFAULT_MODEL_DIR,
+    DIFFUSERS_SD_CLASS_NAME,
+    DIFFUSERS_SD_INPAINT_CLASS_NAME,
+    DIFFUSERS_SDXL_CLASS_NAME,
+    DIFFUSERS_SDXL_INPAINT_CLASS_NAME,
+)
 from sorawm.iopaint.model.original_sd_configs import get_config_files
 from sorawm.iopaint.schema import ModelInfo, ModelType
 
@@ -184,13 +187,7 @@ def scan_inpaint_models(model_dir: Path) -> List[ModelInfo]:
 
     for name, m in models.items():
         if m.is_erase_model and m.is_downloaded():
-            res.append(
-                ModelInfo(
-                    name=name,
-                    path=name,
-                    model_type=ModelType.INPAINT,
-                )
-            )
+            res.append(ModelInfo(name=name, path=name, model_type=ModelType.INPAINT,))
     return res
 
 
@@ -237,13 +234,7 @@ def scan_diffusers_models() -> List[ModelInfo]:
             continue
 
         diffusers_model_names.append(name)
-        available_models.append(
-            ModelInfo(
-                name=name,
-                path=name,
-                model_type=model_type,
-            )
-        )
+        available_models.append(ModelInfo(name=name, path=name, model_type=model_type,))
     return available_models
 
 
@@ -283,9 +274,7 @@ def _scan_converted_diffusers_models(cache_dir) -> List[ModelInfo]:
             diffusers_model_names.append(name)
             available_models.append(
                 ModelInfo(
-                    name=name,
-                    path=str(it.parent.absolute()),
-                    model_type=model_type,
+                    name=name, path=str(it.parent.absolute()), model_type=model_type,
                 )
             )
     return available_models

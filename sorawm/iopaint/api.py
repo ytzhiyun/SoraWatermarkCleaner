@@ -32,22 +32,36 @@ from PIL import Image
 from socketio import AsyncServer
 
 from sorawm.iopaint.file_manager import FileManager
-from sorawm.iopaint.helper import (adjust_mask, concat_alpha_channel,
-                                   decode_base64_to_image, gen_frontend_mask,
-                                   load_img, numpy_to_bytes, pil_to_bytes)
+from sorawm.iopaint.helper import (
+    adjust_mask,
+    concat_alpha_channel,
+    decode_base64_to_image,
+    gen_frontend_mask,
+    load_img,
+    numpy_to_bytes,
+    pil_to_bytes,
+)
 from sorawm.iopaint.model.utils import torch_gc
 from sorawm.iopaint.model_manager import ModelManager
-from sorawm.iopaint.plugins import (InteractiveSeg, RealESRGANUpscaler,
-                                    build_plugins)
+from sorawm.iopaint.plugins import InteractiveSeg, RealESRGANUpscaler, build_plugins
 from sorawm.iopaint.plugins.base_plugin import BasePlugin
 from sorawm.iopaint.plugins.remove_bg import RemoveBG
-from sorawm.iopaint.schema import (AdjustMaskRequest, ApiConfig,
-                                   GenInfoResponse, InpaintRequest,
-                                   InteractiveSegModel, ModelInfo, PluginInfo,
-                                   RealESRGANModel, RemoveBGModel,
-                                   RunPluginRequest, SDSampler,
-                                   ServerConfigResponse, SwitchModelRequest,
-                                   SwitchPluginModelRequest)
+from sorawm.iopaint.schema import (
+    AdjustMaskRequest,
+    ApiConfig,
+    GenInfoResponse,
+    InpaintRequest,
+    InteractiveSegModel,
+    ModelInfo,
+    PluginInfo,
+    RealESRGANModel,
+    RemoveBGModel,
+    RunPluginRequest,
+    SDSampler,
+    ServerConfigResponse,
+    SwitchModelRequest,
+    SwitchPluginModelRequest,
+)
 
 CURRENT_DIR = Path(__file__).parent.absolute().resolve()
 WEB_APP_DIR = CURRENT_DIR / "web_app"
@@ -275,10 +289,7 @@ class Api:
         rgb_res = concat_alpha_channel(rgb_np_img, alpha_channel)
 
         res_img_bytes = pil_to_bytes(
-            Image.fromarray(rgb_res),
-            ext=ext,
-            quality=self.config.quality,
-            infos=infos,
+            Image.fromarray(rgb_res), ext=ext, quality=self.config.quality, infos=infos,
         )
 
         asyncio.run(self.sio.emit("diffusion_finish"))
@@ -329,8 +340,7 @@ class Api:
         torch_gc()
         res_mask = gen_frontend_mask(bgr_or_gray_mask)
         return Response(
-            content=numpy_to_bytes(res_mask, "png"),
-            media_type="image/png",
+            content=numpy_to_bytes(res_mask, "png"), media_type="image/png",
         )
 
     def api_samplers(self) -> List[str]:

@@ -88,20 +88,9 @@ class ImageEncoderViTHQ(nn.Module):
             self.blocks.append(block)
 
         self.neck = nn.Sequential(
-            nn.Conv2d(
-                embed_dim,
-                out_chans,
-                kernel_size=1,
-                bias=False,
-            ),
+            nn.Conv2d(embed_dim, out_chans, kernel_size=1, bias=False,),
             LayerNorm2d(out_chans),
-            nn.Conv2d(
-                out_chans,
-                out_chans,
-                kernel_size=3,
-                padding=1,
-                bias=False,
-            ),
+            nn.Conv2d(out_chans, out_chans, kernel_size=3, padding=1, bias=False,),
             LayerNorm2d(out_chans),
         )
 
@@ -214,7 +203,7 @@ class Attention(nn.Module):
         super().__init__()
         self.num_heads = num_heads
         head_dim = dim // num_heads
-        self.scale = head_dim**-0.5
+        self.scale = head_dim ** -0.5
 
         self.qkv = nn.Linear(dim, dim * 3, bias=qkv_bias)
         self.proj = nn.Linear(dim, dim)

@@ -59,10 +59,7 @@ def test_outpainting(name, device, rect):
 @pytest.mark.parametrize("name", ["kandinsky-community/kandinsky-2-2-decoder-inpaint"])
 @pytest.mark.parametrize("device", ["cuda", "mps"])
 @pytest.mark.parametrize(
-    "rect",
-    [
-        [-128, -128, 768, 768],
-    ],
+    "rect", [[-128, -128, 768, 768],],
 )
 def test_kandinsky_outpainting(name, device, rect):
     sd_steps = check_device(device)
@@ -100,10 +97,7 @@ def test_kandinsky_outpainting(name, device, rect):
 @pytest.mark.parametrize("name", ["Sanster/PowerPaint-V1-stable-diffusion-inpainting"])
 @pytest.mark.parametrize("device", ["cuda", "mps"])
 @pytest.mark.parametrize(
-    "rect",
-    [
-        [-100, -100, 512 + 200, 512 + 200],
-    ],
+    "rect", [[-100, -100, 512 + 200, 512 + 200],],
 )
 def test_powerpaint_outpainting(name, device, rect):
     sd_steps = check_device(device)

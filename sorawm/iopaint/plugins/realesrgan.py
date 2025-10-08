@@ -292,10 +292,7 @@ class RealESRGANer:
         if outscale is not None and outscale != float(self.scale):
             output = cv2.resize(
                 output,
-                (
-                    int(w_input * outscale),
-                    int(h_input * outscale),
-                ),
+                (int(w_input * outscale), int(h_input * outscale),),
                 interpolation=cv2.INTER_LANCZOS4,
             )
 

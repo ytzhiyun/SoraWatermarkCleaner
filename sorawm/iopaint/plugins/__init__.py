@@ -48,9 +48,7 @@ def build_plugins(
             f"Initialize {RealESRGANUpscaler.name} plugin: {realesrgan_model}, {realesrgan_device}"
         )
         plugins[RealESRGANUpscaler.name] = RealESRGANUpscaler(
-            realesrgan_model,
-            realesrgan_device,
-            no_half=no_half,
+            realesrgan_model, realesrgan_device, no_half=no_half,
         )
 
     if enable_gfpgan:
@@ -62,14 +60,12 @@ def build_plugins(
                 f"GFPGAN no background upscaler, use --enable-realesrgan to enable it"
             )
         plugins[GFPGANPlugin.name] = GFPGANPlugin(
-            gfpgan_device,
-            upscaler=plugins.get(RealESRGANUpscaler.name, None),
+            gfpgan_device, upscaler=plugins.get(RealESRGANUpscaler.name, None),
         )
 
     if enable_restoreformer:
         logger.info(f"Initialize {RestoreFormerPlugin.name} plugin")
         plugins[RestoreFormerPlugin.name] = RestoreFormerPlugin(
-            restoreformer_device,
-            upscaler=plugins.get(RealESRGANUpscaler.name, None),
+            restoreformer_device, upscaler=plugins.get(RealESRGANUpscaler.name, None),
         )
     return plugins

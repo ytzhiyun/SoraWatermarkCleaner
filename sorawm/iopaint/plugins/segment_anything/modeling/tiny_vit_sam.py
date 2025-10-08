@@ -356,18 +356,13 @@ class Mlp(nn.Module):
 
 class Attention(torch.nn.Module):
     def __init__(
-        self,
-        dim,
-        key_dim,
-        num_heads=8,
-        attn_ratio=4,
-        resolution=(14, 14),
+        self, dim, key_dim, num_heads=8, attn_ratio=4, resolution=(14, 14),
     ):
         super().__init__()
         # (h, w)
         assert isinstance(resolution, tuple) and len(resolution) == 2
         self.num_heads = num_heads
-        self.scale = key_dim**-0.5
+        self.scale = key_dim ** -0.5
         self.key_dim = key_dim
         self.nh_kd = nh_kd = key_dim * num_heads
         self.d = int(attn_ratio * key_dim)
@@ -710,10 +705,7 @@ class TinyViT(nn.Module):
                 activation=activation,
             )
             if i_layer == 0:
-                layer = ConvLayer(
-                    conv_expand_ratio=mbconv_expand_ratio,
-                    **kwargs,
-                )
+                layer = ConvLayer(conv_expand_ratio=mbconv_expand_ratio, **kwargs,)
             else:
                 layer = BasicLayer(
                     num_heads=num_heads[i_layer],
@@ -737,20 +729,9 @@ class TinyViT(nn.Module):
         self.apply(self._init_weights)
         self.set_layer_lr_decay(layer_lr_decay)
         self.neck = nn.Sequential(
-            nn.Conv2d(
-                embed_dims[-1],
-                256,
-                kernel_size=1,
-                bias=False,
-            ),
+            nn.Conv2d(embed_dims[-1], 256, kernel_size=1, bias=False,),
             LayerNorm2d(256),
-            nn.Conv2d(
-                256,
-                256,
-                kernel_size=3,
-                padding=1,
-                bias=False,
-            ),
+            nn.Conv2d(256, 256, kernel_size=3, padding=1, bias=False,),
             LayerNorm2d(256),
         )
 

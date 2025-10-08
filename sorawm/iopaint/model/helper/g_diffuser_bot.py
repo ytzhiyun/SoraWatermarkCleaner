@@ -46,13 +46,7 @@ if __name__ == "__main__":
     image_path = "/Users/cwq/code/github/IOPaint/iopaint/tests/bunny.jpeg"
     init_image = cv2.imread(str(image_path))
     init_image, mask_image = expand_image(
-        init_image,
-        top=0,
-        right=0,
-        bottom=0,
-        left=100,
-        softness=20,
-        space=20,
+        init_image, top=0, right=0, bottom=0, left=100, softness=20, space=20,
     )
     print(mask_image.dtype, mask_image.min(), mask_image.max())
     print(init_image.dtype, init_image.min(), init_image.max())

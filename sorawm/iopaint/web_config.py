@@ -8,8 +8,13 @@ from pathlib import Path
 mimetypes.add_type("application/javascript", ".js")
 mimetypes.add_type("text/css", ".css")
 
-from sorawm.iopaint.schema import (ApiConfig, Device, InteractiveSegModel,
-                                   RealESRGANModel, RemoveBGModel)
+from sorawm.iopaint.schema import (
+    ApiConfig,
+    Device,
+    InteractiveSegModel,
+    RealESRGANModel,
+    RemoveBGModel,
+)
 
 os.environ["GRADIO_ANALYTICS_ENABLED"] = "False"
 
@@ -209,8 +214,7 @@ def main(config_file: Path):
                         label=f"Output directory. {OUTPUT_DIR_HELP}",
                     )
                     mask_dir = gr.Textbox(
-                        init_config.mask_dir,
-                        label=f"Mask directory. {MASK_DIR_HELP}",
+                        init_config.mask_dir, label=f"Mask directory. {MASK_DIR_HELP}",
                     )
 
             with gr.Tab("Plugins"):

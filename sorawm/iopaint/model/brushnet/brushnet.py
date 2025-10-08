@@ -4,16 +4,26 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 import torch
 from diffusers.configuration_utils import ConfigMixin, register_to_config
 from diffusers.models.attention_processor import (
-    ADDED_KV_ATTENTION_PROCESSORS, CROSS_ATTENTION_PROCESSORS,
-    AttentionProcessor, AttnAddedKVProcessor, AttnProcessor)
-from diffusers.models.embeddings import (TextImageProjection,
-                                         TextImageTimeEmbedding,
-                                         TextTimeEmbedding, TimestepEmbedding,
-                                         Timesteps)
+    ADDED_KV_ATTENTION_PROCESSORS,
+    CROSS_ATTENTION_PROCESSORS,
+    AttentionProcessor,
+    AttnAddedKVProcessor,
+    AttnProcessor,
+)
+from diffusers.models.embeddings import (
+    TextImageProjection,
+    TextImageTimeEmbedding,
+    TextTimeEmbedding,
+    TimestepEmbedding,
+    Timesteps,
+)
 from diffusers.models.modeling_utils import ModelMixin
-from diffusers.models.unets.unet_2d_blocks import (CrossAttnDownBlock2D,
-                                                   DownBlock2D, get_down_block,
-                                                   get_up_block)
+from diffusers.models.unets.unet_2d_blocks import (
+    CrossAttnDownBlock2D,
+    DownBlock2D,
+    get_down_block,
+    get_up_block,
+)
 from diffusers.models.unets.unet_2d_condition import UNet2DConditionModel
 from diffusers.utils import BaseOutput, logging
 from torch import nn
@@ -231,9 +241,7 @@ class BrushNetModel(ModelMixin, ConfigMixin):
         self.time_proj = Timesteps(block_out_channels[0], flip_sin_to_cos, freq_shift)
         timestep_input_dim = block_out_channels[0]
         self.time_embedding = TimestepEmbedding(
-            timestep_input_dim,
-            time_embed_dim,
-            act_fn=act_fn,
+            timestep_input_dim, time_embed_dim, act_fn=act_fn,
         )
 
         if encoder_hid_dim_type is None and encoder_hid_dim is not None:
