@@ -8,9 +8,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 from sorawm.iopaint.model.anytext.ldm.modules.diffusionmodules.util import (
-    conv_nd,
-    linear,
-)
+    conv_nd, linear)
 
 
 def get_clip_token_for_string(tokenizer, string):
@@ -164,7 +162,9 @@ class EmbeddingManager(nn.Module):
             self.text_embs_all += [text_embs]
 
     def forward(
-        self, tokenized_text, embedded_text,
+        self,
+        tokenized_text,
+        embedded_text,
     ):
         b, device = tokenized_text.shape[0], tokenized_text.device
         for i in range(b):

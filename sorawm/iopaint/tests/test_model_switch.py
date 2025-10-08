@@ -35,7 +35,12 @@ def test_controlnet_switch_onoff(caplog):
         cpu_offload=False,
     )
 
-    model.switch_controlnet_method(InpaintRequest(name=name, enable_controlnet=False,))
+    model.switch_controlnet_method(
+        InpaintRequest(
+            name=name,
+            enable_controlnet=False,
+        )
+    )
 
     assert "Disable controlnet" in caplog.text
 
@@ -55,7 +60,11 @@ def test_switch_controlnet_method(caplog):
     )
 
     model.switch_controlnet_method(
-        InpaintRequest(name=name, enable_controlnet=True, controlnet_method=new_method,)
+        InpaintRequest(
+            name=name,
+            enable_controlnet=True,
+            controlnet_method=new_method,
+        )
     )
 
     assert f"Switch Controlnet method from {old_method} to {new_method}" in caplog.text

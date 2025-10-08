@@ -1,14 +1,9 @@
 import torch
 import torch.nn as nn
 from torch.utils.checkpoint import checkpoint
-from transformers import (
-    AutoProcessor,
-    CLIPTextModel,
-    CLIPTokenizer,
-    CLIPVisionModelWithProjection,
-    T5EncoderModel,
-    T5Tokenizer,
-)
+from transformers import (AutoProcessor, CLIPTextModel, CLIPTokenizer,
+                          CLIPVisionModelWithProjection, T5EncoderModel,
+                          T5Tokenizer)
 
 from sorawm.iopaint.model.anytext.ldm.util import count_params
 

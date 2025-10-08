@@ -78,7 +78,10 @@ def test_sdxl_cpu_text_encoder(device, strategy, sampler):
 
 @pytest.mark.parametrize("device", ["cuda", "mps"])
 @pytest.mark.parametrize(
-    "rect", [[-128, -128, 1024, 1024],],
+    "rect",
+    [
+        [-128, -128, 1024, 1024],
+    ],
 )
 def test_sdxl_outpainting(device, rect):
     sd_steps = check_device(device)

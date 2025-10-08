@@ -13,7 +13,10 @@ from .modeling import Sam
 
 
 class SamPredictor:
-    def __init__(self, sam_model: Sam,) -> None:
+    def __init__(
+        self,
+        sam_model: Sam,
+    ) -> None:
         """
         Uses SAM to calculate the image embedding for an image, and then
         allow repeated, efficient mask prediction given prompts.
@@ -28,7 +31,11 @@ class SamPredictor:
         self.transform = ResizeLongestSide(sam_model.image_encoder.img_size)
         self.reset_image()
 
-    def set_image(self, image: np.ndarray, image_format: str = "RGB",) -> None:
+    def set_image(
+        self,
+        image: np.ndarray,
+        image_format: str = "RGB",
+    ) -> None:
         """
         Calculates the image embeddings for the provided image, allowing
         masks to be predicted with the 'predict' method.
@@ -56,7 +63,9 @@ class SamPredictor:
 
     @torch.no_grad()
     def set_torch_image(
-        self, transformed_image: torch.Tensor, original_image_size: Tuple[int, ...],
+        self,
+        transformed_image: torch.Tensor,
+        original_image_size: Tuple[int, ...],
     ) -> None:
         """
         Calculates the image embeddings for the provided image, allowing
@@ -223,7 +232,9 @@ class SamPredictor:
 
         # Embed prompts
         sparse_embeddings, dense_embeddings = self.model.prompt_encoder(
-            points=points, boxes=boxes, masks=mask_input,
+            points=points,
+            boxes=boxes,
+            masks=mask_input,
         )
 
         # Predict masks

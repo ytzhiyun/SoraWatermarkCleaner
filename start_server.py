@@ -2,12 +2,10 @@ import argparse
 
 import fire
 import uvicorn
-from fastapi import FastAPI
 from loguru import logger
 
 from sorawm.configs import LOGS_PATH
 from sorawm.server.app import init_app
-from sorawm.server.lifespan import lifespan
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--host", default="0.0.0.0", help="host")

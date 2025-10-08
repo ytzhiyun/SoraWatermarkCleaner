@@ -4,12 +4,8 @@ from PIL import Image
 
 from sorawm.iopaint.helper import encode_pil_to_base64, gen_frontend_mask
 from sorawm.iopaint.plugins.anime_seg import AnimeSeg
-from sorawm.iopaint.schema import (
-    Device,
-    InteractiveSegModel,
-    RemoveBGModel,
-    RunPluginRequest,
-)
+from sorawm.iopaint.schema import (Device, InteractiveSegModel, RemoveBGModel,
+                                   RunPluginRequest)
 from sorawm.iopaint.tests.utils import check_device, current_dir, save_dir
 
 os.environ["PYTORCH_ENABLE_MPS_FALLBACK"] = "1"
@@ -17,13 +13,9 @@ os.environ["PYTORCH_ENABLE_MPS_FALLBACK"] = "1"
 import cv2
 import pytest
 
-from sorawm.iopaint.plugins import (
-    GFPGANPlugin,
-    InteractiveSeg,
-    RealESRGANUpscaler,
-    RemoveBG,
-    RestoreFormerPlugin,
-)
+from sorawm.iopaint.plugins import (GFPGANPlugin, InteractiveSeg,
+                                    RealESRGANUpscaler, RemoveBG,
+                                    RestoreFormerPlugin)
 
 img_p = current_dir / "bunny.jpeg"
 img_bytes = open(img_p, "rb").read()

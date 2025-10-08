@@ -11,7 +11,9 @@ from sorawm.server.worker import worker
 router = APIRouter()
 
 
-async def process_upload_and_queue(task_id: str, video_content: bytes, video_path: Path):
+async def process_upload_and_queue(
+    task_id: str, video_content: bytes, video_path: Path
+):
     try:
         async with aiofiles.open(video_path, "wb") as f:
             await f.write(video_content)
@@ -24,10 +26,10 @@ async def process_upload_and_queue(task_id: str, video_content: bytes, video_pat
 async def submit_remove_task(
     background_tasks: BackgroundTasks, video: UploadFile = File(...)
 ):
-    task_id = await worker.create_task()    
-    content = await video.read()    
+    task_id = await worker.create_task()
+    content = await video.read()
     upload_filename = f"{uuid4()}_{video.filename}"
-    video_path = worker.upload_dir / upload_filename    
+    video_path = worker.upload_dir / upload_filename
     background_tasks.add_task(process_upload_and_queue, task_id, content, video_path)
 
     return {"task_id": task_id, "message": "Task submitted."}

@@ -57,7 +57,10 @@ def CrossAttnDownBlock2D_forward(
                 {"use_reentrant": False} if is_torch_version(">=", "1.11.0") else {}
             )
             hidden_states = torch.utils.checkpoint.checkpoint(
-                create_custom_forward(resnet), hidden_states, temb, **ckpt_kwargs,
+                create_custom_forward(resnet),
+                hidden_states,
+                temb,
+                **ckpt_kwargs,
             )
             hidden_states = attn(
                 hidden_states,
@@ -213,7 +216,10 @@ def CrossAttnUpBlock2D_forward(
                 {"use_reentrant": False} if is_torch_version(">=", "1.11.0") else {}
             )
             hidden_states = torch.utils.checkpoint.checkpoint(
-                create_custom_forward(resnet), hidden_states, temb, **ckpt_kwargs,
+                create_custom_forward(resnet),
+                hidden_states,
+                temb,
+                **ckpt_kwargs,
             )
             hidden_states = attn(
                 hidden_states,

@@ -31,8 +31,7 @@ SoraWatermarkCleaner（后面我们简称为 `SoraWm`）由两部分组成：
 
 
 ## 2. 安装
-
-我们强烈推荐使用 `uv` 来安装环境：
+视频处理需要 [FFmpeg](https://ffmpeg.org/)，请先安装它。我们强烈推荐使用 `uv` 来安装环境：
 
 1. 安装：
 
@@ -78,13 +77,43 @@ streamlit run app.py
 
 <img src="resources/app.png" style="zoom: 25%;" />
 
-## 4. 许可证
+## 4. WebServer
+
+在这里，我们提供了一个基于 FastAPI 的 Web 服务器，可以快速将这个水印清除器转换为服务。
+
+只需运行：
+
+```python
+python start_server.py
+```
+
+Web 服务器将在端口 `5344` 启动，你可以查看 FastAPI [文档](http://localhost:5344/docs) 了解详情，有三个路由：
+
+1. submit_remove_task:
+
+   > 上传视频后，会返回一个任务 ID，该视频将立即被处理。
+
+   <img src="resources/53abf3fd-11a9-4dd7-a348-34920775f8ad.png" alt="image" style="zoom: 25%;" />
+
+2. get_results:
+
+你可以使用上面的任务 ID 检索任务状态，它会显示视频处理的百分比。一旦完成，返回的数据中会有下载 URL。
+
+3. downlaod:
+
+你可以使用第2步中的下载 URL 来获取清理后的视频。
+
+## 5. API
+
+打包为 Cog 并[发布到 Replicate](https://replicate.com/uglyrobot/sora2-watermark-remover)，便于基于 API 的简单使用。
+
+## 6. 许可证
 
 Apache License
 
 
 
-## 5. 引用
+## 7. 引用
 
 如果你使用了这个项目，请引用：
 
@@ -97,7 +126,7 @@ Apache License
 }
 ```
 
-## 6. 致谢
+## 8. 致谢
 
 - [IOPaint](https://github.com/Sanster/IOPaint) 提供的 LAMA 实现
 - [Ultralytics YOLO](https://github.com/ultralytics/ultralytics) 提供的目标检测

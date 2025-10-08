@@ -90,7 +90,12 @@ class NoiseScheduleVP:
             self.t_array = torch.linspace(0.0, 1.0, self.total_N + 1)[1:].reshape(
                 (1, -1)
             )
-            self.log_alpha_array = log_alphas.reshape((1, -1,))
+            self.log_alpha_array = log_alphas.reshape(
+                (
+                    1,
+                    -1,
+                )
+            )
         else:
             self.total_N = 1000
             self.beta_0 = continuous_beta_0
@@ -126,7 +131,7 @@ class NoiseScheduleVP:
                 self.log_alpha_array.to(t.device),
             ).reshape((-1))
         elif self.schedule == "linear":
-            return -0.25 * t ** 2 * (self.beta_1 - self.beta_0) - 0.5 * t * self.beta_0
+            return -0.25 * t**2 * (self.beta_1 - self.beta_0) - 0.5 * t * self.beta_0
         elif self.schedule == "cosine":
             log_alpha_fn = lambda s: torch.log(
                 torch.cos((s + self.cosine_s) / (1.0 + self.cosine_s) * math.pi / 2.0)
@@ -164,7 +169,7 @@ class NoiseScheduleVP:
                 * (self.beta_1 - self.beta_0)
                 * torch.logaddexp(-2.0 * lamb, torch.zeros((1,)).to(lamb))
             )
-            Delta = self.beta_0 ** 2 + tmp
+            Delta = self.beta_0**2 + tmp
             return tmp / (torch.sqrt(Delta) + self.beta_0) / (self.beta_1 - self.beta_0)
         elif self.schedule == "discrete":
             log_alpha = -0.5 * torch.logaddexp(
@@ -504,21 +509,41 @@ class DPM_Solver:
         if order == 3:
             K = steps // 3 + 1
             if steps % 3 == 0:
-                orders = [3,] * (K - 2) + [2, 1]
+                orders = [
+                    3,
+                ] * (
+                    K - 2
+                ) + [2, 1]
             elif steps % 3 == 1:
-                orders = [3,] * (K - 1) + [1]
+                orders = [
+                    3,
+                ] * (
+                    K - 1
+                ) + [1]
             else:
-                orders = [3,] * (K - 1) + [2]
+                orders = [
+                    3,
+                ] * (
+                    K - 1
+                ) + [2]
         elif order == 2:
             if steps % 2 == 0:
                 K = steps // 2
-                orders = [2,] * K
+                orders = [
+                    2,
+                ] * K
             else:
                 K = steps // 2 + 1
-                orders = [2,] * (K - 1) + [1]
+                orders = [
+                    2,
+                ] * (
+                    K - 1
+                ) + [1]
         elif order == 1:
             K = 1
-            orders = [1,] * steps
+            orders = [
+                1,
+            ] * steps
         else:
             raise ValueError("'order' must be '1' or '2' or '3'.")
         if skip_type == "logSNR":
@@ -526,7 +551,14 @@ class DPM_Solver:
             timesteps_outer = self.get_time_steps(skip_type, t_T, t_0, K, device)
         else:
             timesteps_outer = self.get_time_steps(skip_type, t_T, t_0, steps, device)[
-                torch.cumsum(torch.tensor([0,] + orders)).to(device)
+                torch.cumsum(
+                    torch.tensor(
+                        [
+                            0,
+                        ]
+                        + orders
+                    )
+                ).to(device)
             ]
         return timesteps_outer, orders
 
@@ -966,7 +998,7 @@ class DPM_Solver:
                 - expand_dims(alpha_t * (torch.exp(-h) - 1.0), dims) * model_prev_0
                 + expand_dims(alpha_t * ((torch.exp(-h) - 1.0) / h + 1.0), dims) * D1
                 - expand_dims(
-                    alpha_t * ((torch.exp(-h) - 1.0 + h) / h ** 2 - 0.5), dims
+                    alpha_t * ((torch.exp(-h) - 1.0 + h) / h**2 - 0.5), dims
                 )
                 * D2
             )
@@ -975,7 +1007,7 @@ class DPM_Solver:
                 expand_dims(torch.exp(log_alpha_t - log_alpha_prev_0), dims) * x
                 - expand_dims(sigma_t * (torch.exp(h) - 1.0), dims) * model_prev_0
                 - expand_dims(sigma_t * ((torch.exp(h) - 1.0) / h - 1.0), dims) * D1
-                - expand_dims(sigma_t * ((torch.exp(h) - 1.0 - h) / h ** 2 - 0.5), dims)
+                - expand_dims(sigma_t * ((torch.exp(h) - 1.0 - h) / h**2 - 0.5), dims)
                 * D2
             )
         return x_t
@@ -1107,16 +1139,20 @@ class DPM_Solver:
             lower_update = lambda x, s, t: self.dpm_solver_first_update(
                 x, s, t, return_intermediate=True
             )
-            higher_update = lambda x, s, t, **kwargs: self.singlestep_dpm_solver_second_update(
-                x, s, t, r1=r1, solver_type=solver_type, **kwargs
+            higher_update = (
+                lambda x, s, t, **kwargs: self.singlestep_dpm_solver_second_update(
+                    x, s, t, r1=r1, solver_type=solver_type, **kwargs
+                )
             )
         elif order == 3:
             r1, r2 = 1.0 / 3.0, 2.0 / 3.0
             lower_update = lambda x, s, t: self.singlestep_dpm_solver_second_update(
                 x, s, t, r1=r1, return_intermediate=True, solver_type=solver_type
             )
-            higher_update = lambda x, s, t, **kwargs: self.singlestep_dpm_solver_third_update(
-                x, s, t, r1=r1, r2=r2, solver_type=solver_type, **kwargs
+            higher_update = (
+                lambda x, s, t, **kwargs: self.singlestep_dpm_solver_third_update(
+                    x, s, t, r1=r1, r2=r2, solver_type=solver_type, **kwargs
+                )
             )
         else:
             raise ValueError(
@@ -1332,7 +1368,9 @@ class DPM_Solver:
                 )
             elif method == "singlestep_fixed":
                 K = steps // order
-                orders = [order,] * K
+                orders = [
+                    order,
+                ] * K
                 timesteps_outer = self.get_time_steps(
                     skip_type=skip_type, t_T=t_T, t_0=t_0, N=K, device=device
                 )
@@ -1384,7 +1422,9 @@ def interpolate_fn(x, xp, yp):
         torch.eq(x_idx, 0),
         torch.tensor(1, device=x.device),
         torch.where(
-            torch.eq(x_idx, K), torch.tensor(K - 2, device=x.device), cand_start_idx,
+            torch.eq(x_idx, K),
+            torch.tensor(K - 2, device=x.device),
+            cand_start_idx,
         ),
     )
     end_idx = torch.where(
@@ -1396,7 +1436,9 @@ def interpolate_fn(x, xp, yp):
         torch.eq(x_idx, 0),
         torch.tensor(0, device=x.device),
         torch.where(
-            torch.eq(x_idx, K), torch.tensor(K - 2, device=x.device), cand_start_idx,
+            torch.eq(x_idx, K),
+            torch.tensor(K - 2, device=x.device),
+            cand_start_idx,
         ),
     )
     y_positions_expanded = yp.unsqueeze(0).expand(N, -1, -1)
