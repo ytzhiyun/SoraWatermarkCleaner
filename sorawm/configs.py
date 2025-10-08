@@ -14,3 +14,14 @@ OUTPUT_DIR.mkdir(exist_ok=True, parents=True)
 
 
 DEFAULT_WATERMARK_REMOVE_MODEL = "lama"
+
+WORKING_DIR = ROOT / "working_dir"
+WORKING_DIR.mkdir(exist_ok=True, parents=True)
+
+LOGS_PATH = ROOT / "logs"
+LOGS_PATH.mkdir(exist_ok=True, parents=True)
+
+DATA_PATH = ROOT / "data"
+DATA_PATH.mkdir(exist_ok=True, parents=True)
+
+SQLITE_PATH = DATA_PATH / "db.sqlite3"

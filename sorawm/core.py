@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import Callable
 
 import ffmpeg
 import numpy as np
@@ -15,7 +16,12 @@ class SoraWM:
         self.detector = SoraWaterMarkDetector()
         self.cleaner = WaterMarkCleaner()
 
-    def run(self, input_video_path: Path, output_video_path: Path):
+    def run(
+        self,
+        input_video_path: Path,
+        output_video_path: Path,
+        progress_callback: Callable[[int], None] | None = None,
+    ):
         input_video_loader = VideoLoader(input_video_path)
         output_video_path.parent.mkdir(parents=True, exist_ok=True)
         width = input_video_loader.width
@@ -45,7 +51,6 @@ class SoraWM:
         logger.debug(
             f"total frames: {total_frames}, fps: {fps}, width: {width}, height: {height}"
         )
-        # try:
         for idx, frame in enumerate(
             tqdm(input_video_loader, total=total_frames, desc="Detect watermarks")
         ):
@@ -55,6 +60,11 @@ class SoraWM:
             else:
                 frame_and_mask[idx] = {"frame": frame, "bbox": None}
                 detect_missed.append(idx)
+
+            # 10% - 50%
+            if progress_callback and idx % 10 == 0:
+                progress = 10 + int((idx / total_frames) * 40)
+                progress_callback(progress)
 
         logger.debug(f"detect missed frames: {detect_missed}")
 
@@ -81,10 +91,22 @@ class SoraWM:
                 cleaned_frame = frame
             process_out.stdin.write(cleaned_frame.tobytes())
 
+            # 50% - 95%
+            if progress_callback and idx % 10 == 0:
+                progress = 50 + int((idx / total_frames) * 45)
+                progress_callback(progress)
+
         process_out.stdin.close()
         process_out.wait()
 
+        # 95% - 99%
+        if progress_callback:
+            progress_callback(95)
+
         self.merge_audio_track(input_video_path, temp_output_path, output_video_path)
+
+        if progress_callback:
+            progress_callback(99)
 
     def merge_audio_track(
         self, input_video_path: Path, temp_output_path: Path, output_video_path: Path
