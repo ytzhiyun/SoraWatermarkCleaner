@@ -29,9 +29,7 @@ class SoraWM:
         fps = input_video_loader.fps
         total_frames = input_video_loader.total_frames
         
-        probe = ffmpeg.probe(str(input_video_path))
-        video_stream = next(s for s in probe["streams"] if s["codec_type"] == "video")
-        original_bitrate = video_stream.get("bit_rate", None)
+
         
         temp_output_path = output_video_path.parent / f"temp_{output_video_path.name}"
         output_options = {
@@ -40,8 +38,8 @@ class SoraWM:
             "preset": "slow",  
         }
         
-        if original_bitrate:
-            output_options["video_bitrate"] = str(int(int(original_bitrate) * 1.2))
+        if input_video_loader.original_bitrate:
+            output_options["video_bitrate"] = str(int(int(input_video_loader.original_bitrate) * 1.2))
         else:
             output_options["crf"] = "18"
         
