@@ -28,9 +28,30 @@ class SoraWM:
         height = input_video_loader.height
         fps = input_video_loader.fps
         total_frames = input_video_loader.total_frames
+        
+        # Get original video bitrate to preserve quality
+        probe = ffmpeg.probe(str(input_video_path))
+        video_stream = next(s for s in probe["streams"] if s["codec_type"] == "video")
+        original_bitrate = video_stream.get("bit_rate", None)
+        
         # Create temporary output path for video without audio
         temp_output_path = output_video_path.parent / f"temp_{output_video_path.name}"
 
+        # Build output with quality preservation
+        output_options = {
+            "pix_fmt": "yuv420p",
+            "vcodec": "libx264",
+            "preset": "slow",  # Better quality at the cost of encoding speed
+        }
+        
+        # Use original bitrate if available, otherwise use CRF for high quality
+        if original_bitrate:
+            # Use 1.2x original bitrate to ensure no quality loss
+            output_options["video_bitrate"] = str(int(int(original_bitrate) * 1.2))
+        else:
+            # CRF 18 is visually lossless, CRF 0 is truly lossless but huge file
+            output_options["crf"] = "18"
+        
         process_out = (
             ffmpeg.input(
                 "pipe:",
@@ -39,7 +60,7 @@ class SoraWM:
                 s=f"{width}x{height}",
                 r=fps,
             )
-            .output(str(temp_output_path), pix_fmt="yuv420p", vcodec="libx264")
+            .output(str(temp_output_path), **output_options)
             .overwrite_output()
             .global_args("-loglevel", "error")
             .run_async(pipe_stdin=True)
