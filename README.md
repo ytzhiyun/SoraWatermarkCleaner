@@ -78,16 +78,52 @@ streamlit run app.py
 
 <img src="resources/app.png" style="zoom: 25%;" />
 
-## 4. API
+## **4. WebServer**
+
+Here, we provide a **FastAPI-based web server** that can quickly turn this watermark remover into a service.
+
+Simply run:
+
+```
+python start_server.py
+```
+
+The web server will start on port **5344**.
+
+You can view the FastAPI [documentation](http://localhost:5344/docs) for more details.
+
+There are three routes available:
+
+1. **submit_remove_task**
+
+   > After uploading a video, a task ID will be returned, and the video will begin processing immediately.
+
+<img src="resources/53abf3fd-11a9-4dd7-a348-34920775f8ad.png" alt="image" style="zoom: 25%;" />
+
+2. **get_results**
+
+You can use the task ID obtained above to check the task status.
+
+It will display the percentage of video processing completed.
+
+Once finished, the returned data will include a **download URL**.
+
+3. **download**
+
+You can use the **download URL** from step 2 to retrieve the cleaned video.
+
+
+
+## 5. API
 
 Packaged as a Cog and [published to Replicate](https://replicate.com/uglyrobot/sora2-watermark-remover) for simple API based usage.
 
-## 5. License
+## 6. License
 
  Apache License
 
 
-## 6. Citation
+## 7. Citation
 
 If you use this project, please cite:
 
@@ -100,7 +136,7 @@ If you use this project, please cite:
 }
 ```
 
-## 7. Acknowledgments
+## 8. Acknowledgments
 
 - [IOPaint](https://github.com/Sanster/IOPaint) for the LAMA implementation
 - [Ultralytics YOLO](https://github.com/ultralytics/ultralytics) for object detection
