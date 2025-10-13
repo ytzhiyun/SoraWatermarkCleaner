@@ -13,7 +13,7 @@ https://github.com/user-attachments/assets/8cdc075e-7d15-4d04-8fa2-53dd287e5f4c
 
 https://github.com/user-attachments/assets/3c850ff1-b8e3-41af-a46f-2c734406e77d
 
-
+⭐️: **YOLO 权重已更新，请尝试新版本的水印检测模型，效果会更好。另外，我们已经将标注好的数据集上传到了 Hugging Face，请查看 https://huggingface.co/datasets/LLinked/sora-watermark-dataset。欢迎训练你自己的检测模型或改进我们的模型！**
 
 
 ## 1. 方法
@@ -103,17 +103,22 @@ Web 服务器将在端口 `5344` 启动，你可以查看 FastAPI [文档](http:
 
 你可以使用第2步中的下载 URL 来获取清理后的视频。
 
-## 5. API
+## 5. 数据集
+
+我们已经将标注好的数据集上传到了 Hugging Face，请查看 https://huggingface.co/datasets/LLinked/sora-watermark-dataset。欢迎训练你自己的检测模型或改进我们的模型！
+
+
+
+## 6. API
 
 打包为 Cog 并[发布到 Replicate](https://replicate.com/uglyrobot/sora2-watermark-remover)，便于基于 API 的简单使用。
 
-## 6. 许可证
+## 7. 许可证
 
 Apache License
 
 
-
-## 7. 引用
+## 8. 引用
 
 如果你使用了这个项目，请引用：
 
@@ -126,7 +131,7 @@ Apache License
 }
 ```
 
-## 8. 致谢
+## 9. 致谢
 
 - [IOPaint](https://github.com/Sanster/IOPaint) 提供的 LAMA 实现
 - [Ultralytics YOLO](https://github.com/ultralytics/ultralytics) 提供的目标检测

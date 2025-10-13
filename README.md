@@ -13,7 +13,7 @@ https://github.com/user-attachments/assets/8cdc075e-7d15-4d04-8fa2-53dd287e5f4c
 
 https://github.com/user-attachments/assets/3c850ff1-b8e3-41af-a46f-2c734406e77d
 
-⭐️: **Yolo weights has been updated, try the new version watermark detect model, it should work better.**
+⭐️: **Yolo weights has been updated, try the new version watermark detect model, it should work better. Also, we have uploaded the labelled datasets into huggingface, check this [dataset](https://huggingface.co/datasets/LLinked/sora-watermark-dataset) out. Free free to train your custom detector model or improve our model!**
 
 
 ## 1. Method
@@ -112,18 +112,20 @@ Once finished, the returned data will include a **download URL**.
 
 You can use the **download URL** from step 2 to retrieve the cleaned video.
 
+## 5. Datasets
 
+We have uploaded the labelled datasets into huggingface, check this out https://huggingface.co/datasets/LLinked/sora-watermark-dataset. Free free to train your custom detector model or improve our model!
 
-## 5. API
+## 6. API
 
 Packaged as a Cog and [published to Replicate](https://replicate.com/uglyrobot/sora2-watermark-remover) for simple API based usage.
 
-## 6. License
+## 7. License
 
  Apache License
 
 
-## 7. Citation
+## 8. Citation
 
 If you use this project, please cite:
 
@@ -136,7 +138,7 @@ If you use this project, please cite:
 }
 ```
 
-## 8. Acknowledgments
+## 9. Acknowledgments
 
 - [IOPaint](https://github.com/Sanster/IOPaint) for the LAMA implementation
 - [Ultralytics YOLO](https://github.com/ultralytics/ultralytics) for object detection
