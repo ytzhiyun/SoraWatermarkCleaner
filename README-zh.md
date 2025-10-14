@@ -65,8 +65,8 @@ uv sync
 - [从 Google Drive 下载](https://drive.google.com/file/d/1ujH28aHaCXGgB146g6kyfz3Qxd-wHR1c/view?usp=share_link)
 
 **百度网盘（推荐国内用户使用）：**
-- 链接：https://pan.baidu.com/s/1_tdgs-3-dLNn0IbufIM75g?pwd=fiju
-- 提取码：`fiju`
+- 链接：https://pan.baidu.com/s/1i4exYsPvXv0evnGs5MWcYA?pwd=3jr6
+- 提取码：`3jr6`
 
 ### 特点
 - ✅ 无需安装

@@ -78,8 +78,8 @@ For users who prefer a ready-to-use solution without manual installation, we pro
 - [Download from Google Drive](https://drive.google.com/file/d/1ujH28aHaCXGgB146g6kyfz3Qxd-wHR1c/view?usp=share_link)
 
 **Baidu Pan (百度网盘) - For users in China:**
-- Link: https://pan.baidu.com/s/1_tdgs-3-dLNn0IbufIM75g?pwd=fiju
-- Extract Code (提取码): `fiju`
+- Link: https://pan.baidu.com/s/1i4exYsPvXv0evnGs5MWcYA?pwd=3jr6
+- Extract Code (提取码): `3jr6`
 
 ### Features
 - ✅ No installation required
