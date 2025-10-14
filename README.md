@@ -13,7 +13,12 @@ https://github.com/user-attachments/assets/8cdc075e-7d15-4d04-8fa2-53dd287e5f4c
 
 https://github.com/user-attachments/assets/3c850ff1-b8e3-41af-a46f-2c734406e77d
 
-⭐️: **Yolo weights has been updated, try the new version watermark detect model, it should work better. Also, we have uploaded the labelled datasets into huggingface, check this [dataset](https://huggingface.co/datasets/LLinked/sora-watermark-dataset) out. Free free to train your custom detector model or improve our model!**
+⭐️: 
+
+1. **Yolo weights has been updated, try the new version watermark detect model, it should work better. **
+
+2. **We have uploaded the labelled datasets into huggingface, check this [dataset](https://huggingface.co/datasets/LLinked/sora-watermark-dataset) out. Free free to train your custom detector model or improve our model!**
+3. **One-click portable build is available** — [Download here](#3-one-click-portable-version) for Windows users! No installation required.
 
 
 ## 1. Method
@@ -50,7 +55,28 @@ uv sync
 
 The trained yolo weights will be stored in the `resources` dir as the `best.pt`.  And it will be automatically download from https://github.com/linkedlist771/SoraWatermarkCleaner/releases/download/V0.0.1/best.pt . The `Lama` model is downloaded from https://github.com/Sanster/models/releases/download/add_big_lama/big-lama.pt, and will be stored in the torch cache dir. Both downloads are automatic, if you fail, please check your internet status.
 
-## 3.  Demo
+## 3. One-Click Portable Version
+
+For users who prefer a ready-to-use solution without manual installation, we provide a **one-click portable distribution** that includes all dependencies pre-configured.
+
+### Download Links
+
+**Google Drive:**
+- [Download from Google Drive](https://drive.google.com/file/d/1ujH28aHaCXGgB146g6kyfz3Qxd-wHR1c/view?usp=share_link)
+
+**Baidu Pan (百度网盘) - For users in China:**
+- Link: https://pan.baidu.com/s/1_tdgs-3-dLNn0IbufIM75g?pwd=fiju
+- Extract Code (提取码): `fiju`
+
+### Features
+- ✅ No installation required
+- ✅ All dependencies included
+- ✅ Pre-configured environment
+- ✅ Ready to use out of the box
+
+Simply download, extract, and run!
+
+## 4.  Demo
 
 To have a basic usage, just try the `example.py`:
 
@@ -78,7 +104,7 @@ streamlit run app.py
 
 <img src="resources/app.png" style="zoom: 25%;" />
 
-## **4. WebServer**
+## 5. WebServer
 
 Here, we provide a **FastAPI-based web server** that can quickly turn this watermark remover into a service.
 
@@ -112,20 +138,20 @@ Once finished, the returned data will include a **download URL**.
 
 You can use the **download URL** from step 2 to retrieve the cleaned video.
 
-## 5. Datasets
+## 6. Datasets
 
 We have uploaded the labelled datasets into huggingface, check this out https://huggingface.co/datasets/LLinked/sora-watermark-dataset. Free free to train your custom detector model or improve our model!
 
-## 6. API
+## 7. API
 
 Packaged as a Cog and [published to Replicate](https://replicate.com/uglyrobot/sora2-watermark-remover) for simple API based usage.
 
-## 7. License
+## 8. License
 
  Apache License
 
 
-## 8. Citation
+## 9. Citation
 
 If you use this project, please cite:
 
@@ -138,7 +164,7 @@ If you use this project, please cite:
 }
 ```
 
-## 9. Acknowledgments
+## 10. Acknowledgments
 
 - [IOPaint](https://github.com/Sanster/IOPaint) for the LAMA implementation
 - [Ultralytics YOLO](https://github.com/ultralytics/ultralytics) for object detection
