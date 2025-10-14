@@ -21,7 +21,6 @@ This project provides an elegant way to remove the sora watermark in the sora2 g
 
 
 
-https://github.com/user-attachments/assets/76c1e67a-fbd9-4f05-8753-e03678c02c61
 
 
 
