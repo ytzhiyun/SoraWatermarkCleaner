@@ -5,13 +5,23 @@ English | [中文](README-zh.md)
 This project provides an elegant way to remove the sora watermark in the sora2 generated videos.
 
 
-- Watermark removed
 
-https://github.com/user-attachments/assets/8cdc075e-7d15-4d04-8fa2-53dd287e5f4c
+<table>
+  <tr>
+    <td width="50%">
+      <h3 align="center">Watermark removed</h3>
+      <video src="https://github.com/user-attachments/assets/8cdc075e-7d15-4d04-8fa2-53dd287e5f4c" width="100%"></video>
+    </td>
+    <td width="50%">
+      <h3 align="center">Original</h3>
+      <video src="https://github.com/user-attachments/assets/4f032fc7-97da-471b-9a54-9de2a434fa57" width="100%"></video>
+    </td>
+  </tr>
+</table>
 
-- Original
 
-https://github.com/user-attachments/assets/3c850ff1-b8e3-41af-a46f-2c734406e77d
+
+
 
 ⭐️: **Yolo weights has been updated, try the new version watermark detect model, it should work better. Also, we have uploaded the labelled datasets into huggingface, check this [dataset](https://huggingface.co/datasets/LLinked/sora-watermark-dataset) out. Free free to train your custom detector model or improve our model!**
 
