@@ -59,6 +59,7 @@ class SoraWM:
 
         frame_and_mask = {}
         detect_missed = []
+        bbox_centers = []
 
         logger.debug(
             f"total frames: {total_frames}, fps: {fps}, width: {width}, height: {height}"
@@ -69,9 +70,13 @@ class SoraWM:
             detection_result = self.detector.detect(frame)
             if detection_result["detected"]:
                 frame_and_mask[idx] = {"frame": frame, "bbox": detection_result["bbox"]}
+                x1, y1, x2, y2 = detection_result["bbox"]
+                bbox_centers.append((int((x1 + x2) / 2), int((y1 + y2) / 2)))
+
             else:
                 frame_and_mask[idx] = {"frame": frame, "bbox": None}
                 detect_missed.append(idx)
+                bbox_centers.append(None)
 
             # 10% - 50%
             if progress_callback and idx % 10 == 0:
@@ -79,6 +84,7 @@ class SoraWM:
                 progress_callback(progress)
 
         logger.debug(f"detect missed frames: {detect_missed}")
+        logger.debug(f"bbox centers: \n{bbox_centers}")
 
         for missed_idx in detect_missed:
             before = max(missed_idx - 1, 0)
