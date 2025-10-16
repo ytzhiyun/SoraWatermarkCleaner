@@ -91,23 +91,23 @@ class SoraWM:
                 progress_callback(progress)
 
         logger.debug(f"detect missed frames: {detect_missed}")
-        logger.debug(f"bbox centers: \n{bbox_centers}")
+        # logger.debug(f"bbox centers: \n{bbox_centers}")
         if detect_missed:
             # 1. find the bkps of the bbox centers
             bkps = find_2d_data_bkps(bbox_centers)
             # add the start and end position, to form the complete interval boundaries
             bkps_full = [0] + bkps + [total_frames]
-            logger.debug(f"bkps intervals: {bkps_full}")
+            # logger.debug(f"bkps intervals: {bkps_full}")
 
             # 2. calculate the average bbox of each interval
             interval_bboxes = get_interval_average_bbox(bboxes, bkps_full)
-            logger.debug(f"interval average bboxes: {interval_bboxes}")
+            # logger.debug(f"interval average bboxes: {interval_bboxes}")
 
             # 3. find the interval index of each missed frame
             missed_intervals = find_idxs_interval(detect_missed, bkps_full)
-            logger.debug(
-                f"missed frame intervals: {list(zip(detect_missed, missed_intervals))}"
-            )
+            # logger.debug(
+            #     f"missed frame intervals: {list(zip(detect_missed, missed_intervals))}"
+            # )
 
             # 4. fill the missed frames with the average bbox of the corresponding interval
             for missed_idx, interval_idx in zip(detect_missed, missed_intervals):
@@ -116,6 +116,8 @@ class SoraWM:
                     and interval_bboxes[interval_idx] is not None
                 ):
                     frame_and_mask[missed_idx]["bbox"] = interval_bboxes[interval_idx]
+                    logger.debug(f"Filled missed frame {missed_idx} with bbox:\n"
+                    f" {interval_bboxes[interval_idx]}")
                 else:
                     # if the interval has no valid bbox, use the previous and next frame to complete (fallback strategy)
                     before = max(missed_idx - 1, 0)
