@@ -29,7 +29,7 @@ jobs:
           
           # 将 upstream/main 的更改合并到你的 main 分支
           # 如果有冲突，这个脚本会失败，你需要手动解决
-          git merge upstream/main
+          git merge upstream/main --allow-unrelated-histories
           
           # 将合并后的结果推送回你的 fork 仓库
           git push origin main
