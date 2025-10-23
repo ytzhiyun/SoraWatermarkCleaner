@@ -1,0 +1,35 @@
+name: Sync Fork
+
+on:
+  schedule:
+    - cron: '0 3 * * 0' # 每周日的UTC时间3点执行一次
+  workflow_dispatch: # 允许手动触发
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          # 我们需要一个有写权限的 token 来推送更新
+          # GITHUB_TOKEN 是 GitHub Actions 自动提供的
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Sync upstream changes
+        run: |
+          # 设置 Git 用户信息
+          git config user.name 'GitHub Actions'
+          git config user.email 'actions@github.com'
+          
+          # 添加原始仓库作为 "upstream"
+          git remote add upstream https://github.com/linkedlist771/SoraWatermarkCleaner.git
+          
+          # 从 upstream 拉取最新的 main 分支
+          git fetch upstream main
+          
+          # 将 upstream/main 的更改合并到你的 main 分支
+          # 如果有冲突，这个脚本会失败，你需要手动解决
+          git merge upstream/main
+          
+          # 将合并后的结果推送回你的 fork 仓库
+          git push origin main
